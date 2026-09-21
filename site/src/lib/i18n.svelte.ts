@@ -19,8 +19,8 @@ function applyDocumentLang(lang: Lang) {
   document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
   document.title =
     lang === "zh"
-      ? "ZCode Open Audit — ZCode 开源代码的独立审计"
-      : "ZCode Open Audit — an independent audit of the ZCode source";
+      ? "ZCodium — ZCode 开源代码的独立审计"
+      : "ZCodium — an independent audit of the ZCode source";
   const description = document.querySelector('meta[name="description"]');
   description?.setAttribute(
     "content",

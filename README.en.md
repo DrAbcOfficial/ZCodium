@@ -1,26 +1,26 @@
-# ZCode Open Audit
+# ZCodium
 
 <div align="center">
-  <img src="public/logo/open-audit.svg" alt="ZCode Open Audit" width="96" height="96" />
+  <img src="public/logo/open-audit.svg" alt="ZCodium" width="96" height="96" />
   <p><strong>An independent security audit and hardening fork of ZCode</strong></p>
 </div>
 <p align="center">
   <a href="README.md">简体中文</a> | English ·
-  <a href="https://zcode-open-audit.github.io/Zcode-Open-Audit/">Project site</a>
+  <a href="https://zcode-open-audit.github.io/ZCodium/">Project site</a>
 </p>
 
-> This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. Everything here is backed by code and reproducible checks.
+> This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. The name follows the same pattern as Chrome → Chromium and VS Code → VSCodium: **ZCode → ZCodium**. Everything here is backed by code and reproducible checks.
 
 ## Download and install
 
-The [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases) page ships desktop clients (macOS / Windows / Linux) and the CLI distribution. **Nothing is code-signed**, so the first launch is blocked by the OS — run the command below once to allow it.
+The [Releases](https://github.com/Zcode-Open-Audit/ZCodium/releases) page ships desktop clients (macOS / Windows / Linux) and the CLI distribution. **Nothing is code-signed**, so the first launch is blocked by the OS — run the command below once to allow it.
 
 ### macOS (.dmg)
 
 ```bash
 # after dragging the app into Applications:
-sudo xattr -rd com.apple.quarantine "/Applications/ZCode Open Audit.app"
-open -a "ZCode Open Audit"
+sudo xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
+open -a "ZCodium"
 ```
 
 You can also right-click the app in Finder, choose Open, and confirm Open again in the dialog.
@@ -53,7 +53,7 @@ The CLI distribution needs Node.js 24.
 
 ## How it compares with upstream
 
-| Item                     | ZCode Open Audit (this repo)                                                         | Official client (closed source)                                           | Official open source             |
+| Item                     | ZCodium (this repo)                                                         | Official client (closed source)                                           | Official open source             |
 | ------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- | -------------------------------- |
 | Monitoring and telemetry | **All removed** (~26k lines), with regression checks                                 | Everything on by default; the switches never stopped packaging or uploads | Same as the closed-source client |
 | Repository upload logic  | Removed                                                                              | Present (until the 2026-09-18 report)                                     | Removed (since 2026-09-21)       |
@@ -65,7 +65,7 @@ The CLI distribution needs Node.js 24.
 
 Compared with the upstream open-source release:
 
-- **Rebranded to ZCode Open Audit**: app name, window titles, About dialog, app icons, and the UI copy that used to say ZCode.
+- **Rebranded to ZCodium**: app name, window titles, About dialog, app icons, and the UI copy that used to say ZCode.
 - **Deleted all monitoring and telemetry**, about 26k lines: ARMS RUM, OTLP reporting, crash collection, resource and network sampling, UI instrumentation. Regression checks keep those exits from coming back (see "What we removed" below).
 - **Searched the sensitive paths**: snapshot packaging, encryption, and direct-upload code was reviewed across the repository; this version has no unconsented data egress.
 - **Wired up builds and releases**: GitHub Actions builds the CLI distribution and deploys this site; releases run through the Release workflow with a version number.
@@ -76,8 +76,8 @@ The audit is a static code search, not full dynamic forensics. Findings and limi
 
 - Every commit in [zai-org/ZCode](https://github.com/zai-org/ZCode) gets a diff audit, not just releases.
 - Only risk-free changes are synced. Code that does data egress, monitoring/telemetry, or permission expansion is stripped or rejected, with the reason recorded.
-- Every sync is followed by a rebuild and a new audited release (see [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases)).
-- Audit methods and conclusions stay in this repository and on the [project site](https://zcode-open-audit.github.io/Zcode-Open-Audit/). Review and challenge are welcome.
+- Every sync is followed by a rebuild and a new audited release (see [Releases](https://github.com/Zcode-Open-Audit/ZCodium/releases)).
+- Audit methods and conclusions stay in this repository and on the [project site](https://zcode-open-audit.github.io/ZCodium/). Review and challenge are welcome.
 
 ## Background
 
@@ -114,8 +114,8 @@ Compared with the upstream open-source release, this repository contains **no mo
 
 ## Build and Release
 
-- **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases), and the project site is deployed automatically with GitHub Pages. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
-- **Release flow**: run the [Release](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/actions/workflows/release.yml) workflow manually in Actions, enter a version (for example `3.14.0-audit.1`) to create the tag, publish the release, and build and upload the CLI distribution; check pre-release to mark it as a Pre-release.
+- **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/Zcode-Open-Audit/ZCodium/releases), and the project site is deployed automatically with GitHub Pages. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
+- **Release flow**: run the [Release](https://github.com/Zcode-Open-Audit/ZCodium/actions/workflows/release.yml) workflow manually in Actions, enter a version (for example `3.14.0-audit.1`) to create the tag, publish the release, and build and upload the CLI distribution; check pre-release to mark it as a Pre-release.
 - **Upstream sync**: review the change first, diff-audit it per version, and merge only the risk-free parts; conclusions go into the audit record.
 
 ## Disclaimer

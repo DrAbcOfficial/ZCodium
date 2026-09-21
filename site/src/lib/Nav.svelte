@@ -35,7 +35,7 @@
         <path d="M584 224H832L424 800H176Z" fill="url(#oa-nav)" />
         <path d="M536 720L600 656L648 704L824 528L888 592L648 832Z" fill="#38bdf8" />
       </svg>
-      ZCode Open Audit
+      ZCodium
     </a>
     <nav class="hidden items-center gap-1 md:flex" aria-label="Page navigation">
       {#each links as link}

@@ -5,7 +5,7 @@
   import GithubIcon from "./GithubIcon.svelte";
 
   // 我们的版本目前都以 Pre-release 发布，/releases/latest 会 404，因此取列表里的第一个带发行包的版本。
-  const RELEASES_API = "https://api.github.com/repos/Zcode-Open-Audit/Zcode-Open-Audit/releases?per_page=5";
+  const RELEASES_API = "https://api.github.com/repos/Zcode-Open-Audit/ZCodium/releases?per_page=5";
 
   type OsKind = "macos" | "windows" | "linux" | "unknown";
 

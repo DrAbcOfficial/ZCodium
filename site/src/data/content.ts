@@ -95,7 +95,7 @@ export const copy: Record<Lang, Copy> = {
       scrollHint: "表格可左右滑动查看",
       headers: {
         item: "对比项",
-        audit: "ZCode Open Audit（本仓库）",
+        audit: "ZCodium（本仓库）",
         client: "官方客户端（闭源）",
         oss: "官方开源版",
       },
@@ -142,7 +142,7 @@ export const copy: Record<Lang, Copy> = {
         },
         {
           title: "换成自己的品牌",
-          body: "应用名、窗口标题、关于对话框、应用图标都改成了 ZCode Open Audit，界面文案也一并更新。",
+          body: "应用名、窗口标题、关于对话框、应用图标都改成了 ZCodium，界面文案也一并更新。",
         },
         {
           title: "审计敏感路径",
@@ -211,7 +211,7 @@ export const copy: Record<Lang, Copy> = {
       scrollHint: "Swipe the table sideways",
       headers: {
         item: "Item",
-        audit: "ZCode Open Audit (this repo)",
+        audit: "ZCodium (this repo)",
         client: "Official client (closed source)",
         oss: "Official open source",
       },
@@ -257,7 +257,7 @@ export const copy: Record<Lang, Copy> = {
           body: "ARMS RUM, OTLP reporting, crash capture, resource and network sampling, UI instrumentation — about 26k lines deleted, with regression checks that keep those exits closed.",
         },
         {
-          title: "Rebranded to ZCode Open Audit",
+          title: "Rebranded to ZCodium",
           body: "App name, window titles, About dialog, app icons and the UI copy all use the audit identity now.",
         },
         {
@@ -302,6 +302,6 @@ export const copy: Record<Lang, Copy> = {
   },
 };
 
-export const repoUrl = "https://github.com/Zcode-Open-Audit/Zcode-Open-Audit";
+export const repoUrl = "https://github.com/Zcode-Open-Audit/ZCodium";
 export const upstreamUrl = "https://github.com/zai-org/ZCode";
-export const releasesUrl = "https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases";
+export const releasesUrl = "https://github.com/Zcode-Open-Audit/ZCodium/releases";
