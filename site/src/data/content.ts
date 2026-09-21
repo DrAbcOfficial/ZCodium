@@ -76,7 +76,7 @@ export const copy: Record<Lang, Copy> = {
     },
     hero: {
       badges: ["独立审计 · 非官方 Fork", "持续跟踪上游"],
-      title: "我们审计代码。",
+      title: "我们审计 ZCode 代码。",
       lead: "这个仓库 fork 自上游开源代码。监控与遥测已经全部移除，上游改动逐提交审阅，只同步无风险的部分；发行包都从这里的源码构建。",
       downloadLabel: "下载",
       osSuffix: " 版",
@@ -192,7 +192,7 @@ export const copy: Record<Lang, Copy> = {
     },
     hero: {
       badges: ["Independent audit · unofficial fork", "Tracking upstream"],
-      title: "We audit code.",
+      title: "We audit ZCode.",
       lead: "This repo forks the upstream source. Monitoring and telemetry are gone, upstream changes are reviewed commit by commit, and only risk-free parts get synced. Every artifact is built from the audited source here.",
       downloadLabel: "Download",
       osSuffix: "",
