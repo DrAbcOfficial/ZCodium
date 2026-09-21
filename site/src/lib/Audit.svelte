@@ -8,7 +8,7 @@
     <p class="kicker">Audit</p>
     <h2 class="section-title">我们做了什么</h2>
     <p class="section-lead">
-      本仓库 fork 自智谱 2026-09-21 开源的客户端代码，完成了首轮独立审计——<strong
+      本仓库 fork 自智谱 2026-09-21 开源的客户端代码，完成了首轮独立审计与加固——<strong
         >不是复述公告，而是回到代码本身。</strong
       >
     </p>

@@ -141,7 +141,8 @@ As of this repository's review, the following still lack independently verifiabl
 ## 6. Where this repository stands
 
 - We **do not treat vendor promises as a security guarantee** — we audit the code itself;
-- Our first-round audit confirms the full "package and upload the entire `.git`" implementation is no longer present in the open-source version; the remaining ARMS telemetry component is on our watch list;
+- Our first-round audit confirms the full "package and upload the entire `.git`" implementation is no longer present in the open-source version;
+- On top of that, we **removed all monitoring and telemetry from the desktop client, CLI, and UI**, with regression checks that prevent telemetry paths from being reintroduced (see "What we removed" in [README.en.md](README.en.md));
 - We will **keep tracking upstream, run per-version diff audits, and only sync risk-free code**; anything involving silent exfiltration, telemetry overreach, or unconsented upload is recorded and explained publicly first;
 - See [README.en.md](README.en.md) for the full scope of commitments.
 

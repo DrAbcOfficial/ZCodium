@@ -21,13 +21,31 @@ The key evidence, full timeline, and primary sources are documented in **[INCIDE
 
 ## What we did
 
-This repository forks the client code Zhipu open-sourced on 2026-09-21 and completes a first-round independent audit:
+This repository forks the client code Zhipu open-sourced on 2026-09-21 and completes a first-round independent audit and hardening:
 
 1. **Verify the fix instead of trusting it**: we searched the whole repository for snapshot packaging, encryption, and direct-to-OSS upload logic, and confirmed the full `.git` packaging and upload implementation is no longer present in this version.
-2. **Flag ongoing observation targets**: the current version still includes ARMS (Alibaba Cloud application monitoring) telemetry that reports device identifiers and network request metadata (host, path, timing, error codes). The first-round audit found no content-level reporting, but it stays under observation.
+2. **Remove all monitoring and telemetry**: we removed every monitoring/telemetry implementation from the desktop client, CLI, and UI (ARMS RUM, OTLP, crash collection, resource and network sampling, UI instrumentation — roughly 26k lines deleted). See "What we removed" below.
 3. **Establish a per-version audit baseline**: v3.14.0 is the baseline; every future upstream update gets a diff audit.
 
 > The first-round audit is a static code search, not full dynamic forensics. Findings and limitations will be updated continuously.
+
+## What we removed
+
+Compared with the upstream open-source release, this repository contains **no monitoring or telemetry implementation**:
+
+| Area                        | Removed                                                                                                                                                 |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Client monitoring SDK       | Alibaba Cloud ARMS RUM (`@arms/rum-electron`), its patch, initialization, route instrumentation, and renderer bridges                                   |
+| Usage and network telemetry | Network metric aggregation and reporting, API event ingestion, host/scheduler forwarding, remote-session usage sampling                                 |
+| Resource and performance    | Periodic resource sampling, memory diagnostics, data-size stats, TTFT export, MCP telemetry                                                             |
+| Crash collection            | Crash dump reporting, OOM annotations, stability telemetry                                                                                              |
+| CLI telemetry               | The entire `@zcode/telemetry` package (OTLP export, model API recording, agent metrics and traces)                                                      |
+| UI instrumentation          | All session-open, subscription-error, automation, prompt-template, and user-action instrumentation, plus the platform reporting methods and IPC bridges |
+| Protocol and configuration  | Telemetry event protocols and reporting paths; added filtering so legacy telemetry environment variables cannot re-enter the agent                      |
+
+**Kept on purpose**: local logs (for troubleshooting), user-initiated feedback, and normal business requests (model calls, update checks). The device identifier is used only for business identity and local locks.
+
+**Verification**: the change passes `pnpm typecheck`, `pnpm lint` (0 errors), and per-module regression tests. Full lists and verification limits are in the removal reports: [desktop](packages/desktop/specs/telemetry-removal-report.md), [CLI](apps/zcode-cli/specs/telemetry-removal-report.md), [UI](packages/ui/specs/telemetry-removal-report.md).
 
 ## What we will keep doing
 
