@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { copy, releasesUrl, repoUrl } from "../data/content";
+  import { i18n } from "./i18n.svelte";
   import GithubIcon from "./GithubIcon.svelte";
 
-  const RELEASES_URL = "https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases";
   // 我们的版本目前都以 Pre-release 发布，/releases/latest 会 404，因此取列表里的第一个带发行包的版本。
   const RELEASES_API = "https://api.github.com/repos/Zcode-Open-Audit/Zcode-Open-Audit/releases?per_page=5";
 
@@ -25,9 +26,10 @@
     unknown: /\.tar\.gz$/i,
   };
 
+  const t = $derived(copy[i18n.lang]);
   let os = $state<OsKind>("unknown");
   let version = $state("");
-  let downloadUrl = $state(RELEASES_URL);
+  let downloadUrl = $state(releasesUrl);
 
   onMount(() => {
     const ua = navigator.userAgent;
@@ -63,12 +65,12 @@
 
   const installHint = $derived(
     os === "macos"
-      ? "未签名的 .dmg：拖入“应用程序”后，用 sudo xattr -rd com.apple.quarantine 放行一次"
+      ? t.hero.hints.macos
       : os === "windows"
-        ? "未签名的 .exe：安装前先执行 Unblock-File 解除阻止"
+        ? t.hero.hints.windows
         : os === "linux"
-          ? "未签名的 .AppImage：chmod +x 后直接运行"
-          : "CLI 发行包，需要 Node.js 24",
+          ? t.hero.hints.linux
+          : t.hero.hints.other,
   );
 </script>
 
@@ -87,18 +89,18 @@
           stroke-linejoin="round"
         />
       </svg>
-      下载{osLabel ? ` ${osLabel} 版` : "最新版"}
+      {t.hero.downloadLabel}{osLabel ? ` ${osLabel}${t.hero.osSuffix}` : ""}
       {#if version}<span class="font-mono text-[12.5px] opacity-80">{version}</span>{/if}
     </a>
     <a
       class="inline-flex items-center gap-2 rounded-[9px] border border-white/15 bg-white/[0.03] px-4 py-2.5 text-sm font-semibold text-slate-100 no-underline transition-colors hover:border-white/30 hover:bg-white/[0.06]"
-      href="https://github.com/Zcode-Open-Audit/Zcode-Open-Audit"
+      href={repoUrl}
     >
       <GithubIcon class="h-[15px] w-[15px]" />
-      查看源码
+      {t.hero.viewSource}
     </a>
   </div>
   <p class="text-[13px] text-slate-500">
-    {installHint} · <a class="text-sky-400 hover:underline" href={RELEASES_URL}>全部版本与安装命令</a>
+    {installHint} · <a class="text-sky-400 hover:underline" href={releasesUrl}>{t.hero.allVersions}</a>
   </p>
 </div>

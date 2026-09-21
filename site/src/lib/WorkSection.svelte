@@ -17,14 +17,16 @@
   <div class="wrap">
     <p class="kicker">{kicker}</p>
     <h2 class="section-title">{title}</h2>
-    <ul class="m-0 grid list-none gap-4 p-0 md:grid-cols-2">
+    <ol class="m-0 list-none p-0">
       {#each items as item, index}
-        <li class="card" use:reveal>
-          <span class="num-chip">{String(index + 1).padStart(2, "0")}</span>
-          <h3>{item.title}</h3>
-          <p>{item.body}</p>
+        <li class="work-row" use:reveal>
+          <span class="work-index">{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            <h3 class="work-title">{item.title}</h3>
+            <p class="work-body">{item.body}</p>
+          </div>
         </li>
       {/each}
-    </ul>
+    </ol>
   </div>
 </section>

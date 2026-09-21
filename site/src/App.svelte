@@ -4,7 +4,10 @@
   import CompareSection from "./lib/CompareSection.svelte";
   import WorkSection from "./lib/WorkSection.svelte";
   import SiteFooter from "./lib/SiteFooter.svelte";
-  import { currentChanges, nextSteps } from "./data/content";
+  import { copy } from "./data/content";
+  import { i18n } from "./lib/i18n.svelte";
+
+  const t = $derived(copy[i18n.lang]);
 </script>
 
 <Nav />
@@ -13,10 +16,10 @@
   <CompareSection />
   <WorkSection
     id="current"
-    kicker="This release"
-    title="这个版本改了什么"
-    items={currentChanges}
+    kicker={t.current.kicker}
+    title={t.current.title}
+    items={t.current.items}
   />
-  <WorkSection id="next" kicker="Next" title="接下来怎么走" items={nextSteps} />
+  <WorkSection id="next" kicker={t.next.kicker} title={t.next.title} items={t.next.items} />
 </main>
 <SiteFooter />

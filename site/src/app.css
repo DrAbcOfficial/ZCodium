@@ -60,7 +60,7 @@ body {
 }
 
 .section-title {
-  margin: 0 0 14px;
+  margin: 0 0 28px;
   font-size: clamp(24px, 3.4vw, 34px);
   line-height: 1.25;
   letter-spacing: -0.01em;
@@ -68,23 +68,11 @@ body {
   color: #e6eaf2;
 }
 
-.section-lead {
-  max-width: 760px;
-  margin: 0 0 40px;
-  color: #9aa4b2;
-  font-size: 15.5px;
-}
-
-.section-lead strong {
-  color: #e6eaf2;
-  font-weight: 600;
-}
-
 /* ---------- Hero ---------- */
 .hero-glow {
   background:
-    radial-gradient(720px 340px at 18% -8%, rgb(56 189 248 / 0.14), transparent 62%),
-    radial-gradient(640px 320px at 88% 4%, rgb(248 113 113 / 0.08), transparent 60%);
+    radial-gradient(720px 340px at 16% -10%, rgb(56 189 248 / 0.13), transparent 62%),
+    radial-gradient(560px 300px at 92% 8%, rgb(129 140 248 / 0.07), transparent 60%);
 }
 
 .hero-dots::after {
@@ -93,78 +81,9 @@ body {
   inset: 0;
   background-image: radial-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px);
   background-size: 26px 26px;
-  mask-image: radial-gradient(760px 420px at 50% 0%, #000 30%, transparent 78%);
-  -webkit-mask-image: radial-gradient(760px 420px at 50% 0%, #000 30%, transparent 78%);
+  mask-image: radial-gradient(760px 420px at 40% 0%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(760px 420px at 40% 0%, #000 30%, transparent 78%);
   pointer-events: none;
-}
-
-.gradient-text {
-  background: linear-gradient(96deg, #7dd3fc 0%, #38bdf8 45%, #818cf8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* ---------- 卡片 ---------- */
-.card {
-  background: var(--color-ink-800);
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 14px;
-  padding: 22px;
-  transition:
-    border-color 0.18s ease,
-    background 0.18s ease,
-    transform 0.18s ease;
-}
-
-.card:hover {
-  border-color: rgb(255 255 255 / 0.16);
-  background: var(--color-ink-700);
-  transform: translateY(-2px);
-}
-
-.card h3 {
-  margin: 0 0 8px;
-  font-size: 16.5px;
-  font-weight: 650;
-  color: #e6eaf2;
-}
-
-.card p {
-  margin: 0;
-  font-size: 14.5px;
-  color: #9aa4b2;
-}
-
-.num-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 30px;
-  height: 30px;
-  padding: 0 8px;
-  margin-bottom: 14px;
-  border-radius: 8px;
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--color-brand-400);
-  background: rgb(56 189 248 / 0.12);
-  border: 1px solid rgb(56 189 248 / 0.25);
-}
-
-.note {
-  margin-top: 28px;
-  padding: 16px 20px;
-  border-radius: 10px;
-  border: 1px solid rgb(251 191 36 / 0.28);
-  background: rgb(251 191 36 / 0.1);
-  color: #f3d9a4;
-  font-size: 14px;
-}
-
-.note strong {
-  color: #fcd88f;
 }
 
 /* ---------- 对比表 ---------- */
@@ -206,6 +125,40 @@ body {
   color: #7dd3fc;
 }
 
+/* ---------- 信息列表 ---------- */
+.work-row {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  padding: 22px 0;
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.work-row:last-child {
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.work-index {
+  padding-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-brand-400);
+}
+
+.work-title {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 650;
+  color: #e6eaf2;
+}
+
+.work-body {
+  margin: 0;
+  max-width: 760px;
+  font-size: 14.5px;
+  color: #9aa4b2;
+}
+
 /* ---------- 滚动揭示 ---------- */
 .reveal {
   opacity: 0;
@@ -225,6 +178,11 @@ body {
   .section {
     padding: 56px 0;
   }
+
+  .work-row {
+    grid-template-columns: 36px 1fr;
+    gap: 10px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -236,9 +194,5 @@ body {
     opacity: 1;
     transform: none;
     transition: none;
-  }
-
-  .card:hover {
-    transform: none;
   }
 }
