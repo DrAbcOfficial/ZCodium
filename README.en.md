@@ -10,20 +10,27 @@
 </p>
 
 > This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. We do not treat vendor promises as a security guarantee — we audit the code itself.
->
-> Read the full incident write-up — discovery, technical evidence, timeline, official response, and open questions — in **[INCIDENT.en.md](INCIDENT.en.md)**.
 
-## Why this fork exists
+## Background
 
-On September 18, 2026, developer [ferstar](https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/) published a full reverse-engineering investigation: while a user was signed in, the ZCode desktop client **silently packaged the entire workspace — including the complete Git history — encrypted it, and attempted to upload it to Alibaba Cloud OSS**. Multiple developers independently reproduced the findings, and Zhipu confirmed the behavior and apologized.
+This repository performs independent auditing and continuous hardening on the upstream open-source ZCode code. For the public discussion that motivated this work, please refer to the external sources below (this repository makes no finding of fact about their content):
 
-The key evidence, full timeline, and primary sources are documented in **[INCIDENT.en.md](INCIDENT.en.md)**.
+| Source                                     | Link                                                                   |
+| ------------------------------------------ | ---------------------------------------------------------------------- |
+| ferstar's original technical analysis      | https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/ |
+| Independent reproduction                   | https://blog.margrop.net/post/zcode-silent-git-upload-investigation/   |
+| Official open-source repository (upstream) | https://github.com/zai-org/ZCode                                       |
+| The Paper coverage                         | https://www.thepaper.cn/newsDetail_forward_34111815                    |
+| Jiemian News coverage                      | https://www.jiemian.com/article/15120609.html                          |
+| ITHome coverage                            | https://www.ithome.com/1/005/046.htm                                   |
+| Huxiu coverage                             | https://www.huxiu.com/article/4892416.html                             |
+| ifeng coverage                             | https://tech.ifeng.com/c/8waIS4X7FAe                                   |
 
 ## What we did
 
 This repository forks the client code Zhipu open-sourced on 2026-09-21 and completes a first-round independent audit and hardening:
 
-1. **Verify the fix instead of trusting it**: we searched the whole repository for snapshot packaging, encryption, and direct-to-OSS upload logic, and confirmed the full `.git` packaging and upload implementation is no longer present in this version.
+1. **Audit sensitive paths**: we searched the whole repository for snapshot packaging, encryption, and direct-upload logic, and confirmed there is no unconsented data-egress implementation in this version.
 2. **Remove all monitoring and telemetry**: we removed every monitoring/telemetry implementation from the desktop client, CLI, and UI (ARMS RUM, OTLP, crash collection, resource and network sampling, UI instrumentation — roughly 26k lines deleted). See "What we removed" below.
 3. **Establish a per-version audit baseline**: v3.14.0 is the baseline; every future upstream update gets a diff audit.
 

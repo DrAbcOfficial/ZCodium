@@ -10,20 +10,27 @@
 </p>
 
 > 本仓库 fork 自智谱于 2026 年 9 月 21 日开源的 [zai-org/ZCode](https://github.com/zai-org/ZCode)。我们不把厂商承诺当作安全依据，只审计代码本身。
->
-> 事件的完整始末（取证过程、技术细节、时间线、官方回应与未决问题）见 **[INCIDENT.md](INCIDENT.md)**。
 
-## 为什么会有这个仓库
+## 背景
 
-2026 年 9 月 18 日，开发者 [ferstar](https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/) 公开完整逆向取证：ZCode 桌面客户端在用户登录状态下，会**在后台静默打包整个工作区（含完整 Git 历史），加密后尝试上传至阿里云 OSS**。多名开发者随后独立复现，智谱官方确认了该行为并致歉。
+本仓库基于上游开源的 ZCode 代码开展独立审计与持续加固。促使我们启动这项工作的公开讨论与事实细节，请以外部报道原文为准（本仓库不对其内容作事实认定）：
 
-事件的关键证据、完整时间线与一手资料见 **[INCIDENT.md](INCIDENT.md)**。
+| 来源                     | 链接                                                                   |
+| ------------------------ | ---------------------------------------------------------------------- |
+| ferstar 原始技术分析     | https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/ |
+| 魔都水滴独立复现         | https://blog.margrop.net/post/zcode-silent-git-upload-investigation/   |
+| 智谱官方开源仓库（上游） | https://github.com/zai-org/ZCode                                       |
+| 澎湃新闻相关报道         | https://www.thepaper.cn/newsDetail_forward_34111815                    |
+| 界面新闻相关报道         | https://www.jiemian.com/article/15120609.html                          |
+| IT之家相关报道           | https://www.ithome.com/1/005/046.htm                                   |
+| 虎嗅相关报道             | https://www.huxiu.com/article/4892416.html                             |
+| 凤凰网相关报道           | https://tech.ifeng.com/c/8waIS4X7FAe                                   |
 
 ## 我们做了什么
 
 本仓库 fork 自智谱 2026-09-21 开源的客户端代码，并完成了首轮独立审计与加固：
 
-1. **验证整改，而不是相信整改**：全仓库检索快照打包、加密与 OSS 直传链路，确认 `.git` 全量打包上传的实现已不在当前版本中。
+1. **审计敏感链路**：全仓库检索快照打包、加密与直传相关代码，确认当前版本中不存在未经确认的数据外发实现。
 2. **移除全部监控与遥测**：将桌面客户端、CLI 与 UI 中的监控/遥测实现整体移除（ARMS RUM、OTLP、崩溃采集、资源与网络采样、UI 埋点等，共删除约 2.6 万行代码），详见下文"我们移除了什么"。
 3. **建立逐版本审计基线**：以上游 v3.14.0 为基线，后续每次上游更新都做 diff 审计。
 
