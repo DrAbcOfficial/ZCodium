@@ -6,7 +6,7 @@
 </div>
 <p align="center">
   <a href="README.md">简体中文</a> | English ·
-  <a href="https://zcodium-project.github.io/ZCodium/">Project site</a>
+  <a href="https://zcodium-project.github.io/">Project site</a>
 </p>
 
 > This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. The name follows the same pattern as Chrome → Chromium and VS Code → VSCodium: **ZCode → ZCodium**. Everything here is backed by code and reproducible checks.
@@ -77,7 +77,7 @@ The audit is a static code search, not full dynamic forensics. Findings and limi
 - Every commit in [zai-org/ZCode](https://github.com/zai-org/ZCode) gets a diff audit, not just releases.
 - Only risk-free changes are synced. Code that does data egress, monitoring/telemetry, or permission expansion is stripped or rejected, with the reason recorded.
 - Every sync is followed by a rebuild and a new audited release (see [Releases](https://github.com/ZCodium-project/ZCodium/releases)).
-- Audit methods and conclusions stay in this repository and on the [project site](https://zcodium-project.github.io/ZCodium/). Review and challenge are welcome.
+- Audit methods and conclusions stay in this repository and on the [project site](https://zcodium-project.github.io/). Review and challenge are welcome.
 
 ## Background
 
@@ -114,7 +114,7 @@ Compared with the upstream open-source release, this repository contains **no mo
 
 ## Build and Release
 
-- **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/ZCodium-project/ZCodium/releases), and the project site is deployed automatically with GitHub Pages. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
+- **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/ZCodium-project/ZCodium/releases), and the project site is built in [its own repository](https://github.com/ZCodium-project/zcodium-project.github.io) and served at https://zcodium-project.github.io/. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
 - **Release flow**: run the [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow manually in Actions, enter a version (for example `3.14.0-audit.1`) to create the tag, publish the release, and build and upload the CLI distribution; check pre-release to mark it as a Pre-release.
 - **Upstream sync**: review the change first, diff-audit it per version, and merge only the risk-free parts; conclusions go into the audit record.
 
@@ -325,10 +325,9 @@ Open `http://127.0.0.1:3030` to validate the complete flow, with one backend ser
 | `packages/shared`, `packages/rpc`, `packages/client` | Shared protocols and types, RPC framework, and Agent client SDK                         |
 | `packages/provider`, `packages/provider-node`        | Common provider capabilities and Node implementations                                   |
 | `apps/zcode-cli`                                     | Agent CLI, TUI, runtime, and tools                                                      |
-| `site`                                               | Audit project site (Vite + Svelte + Tailwind CSS), deployed with GitHub Pages           |
 | `scripts`, `config`, `third-party`                   | Build and maintenance scripts, built-in configuration, and third-party notice materials |
 
-The project site source lives in [site/](site/), built with Vite + Svelte + Tailwind CSS v4. Build output goes to `docs/` and is served by GitHub Pages. To publish an update, run `pnpm --dir site build` and commit the output under `docs/`.
+The project site source lives in the [zcodium-project.github.io](https://github.com/ZCodium-project/zcodium-project.github.io) repository, built with Vite + Svelte + Tailwind CSS v4 and deployed with GitHub Actions to <https://zcodium-project.github.io/>.
 
 ## Project Notice
 
