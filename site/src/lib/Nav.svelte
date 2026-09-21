@@ -3,8 +3,8 @@
   import GithubIcon from "./GithubIcon.svelte";
 
   const links = [
-    { href: "#audit", label: "我们做了什么" },
-    { href: "#commitment", label: "持续承诺" },
+    { href: "#current", label: "改了什么" },
+    { href: "#next", label: "接下来" },
   ];
 </script>
 

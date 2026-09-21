@@ -1,54 +1,39 @@
-export interface AuditStep {
+export interface WorkItem {
   title: string;
   body: string;
 }
 
-export const auditSteps: AuditStep[] = [
-  {
-    title: "审计敏感链路",
-    body: "全仓库检索快照打包、加密与直传相关代码，确认当前版本中不存在未经确认的数据外发实现。",
-  },
+export const currentChanges: WorkItem[] = [
   {
     title: "移除全部监控与遥测",
-    body: "将桌面客户端、CLI 与 UI 中的监控/遥测实现整体移除（ARMS RUM、OTLP、崩溃采集、资源与网络采样、UI 埋点等，约 2.6 万行），并加入防回归检查阻止其被重新引入。",
+    body: "ARMS RUM、OTLP 上报、崩溃采集、资源与网络采样、UI 埋点全部删除，约 2.6 万行；另外加了防回归检查，防止这些出口被重新引入。",
   },
   {
-    title: "建立逐版本审计基线",
-    body: "以上游 v3.14.0 为基线，后续每一次上游更新都会做 diff 审计，新增的网络外发与数据收集行为必须被解释。",
+    title: "换成自己的品牌",
+    body: "应用名、窗口标题、关于对话框、应用图标都改成了 ZCode Open Audit，界面文案也一并更新。",
+  },
+  {
+    title: "审计敏感路径",
+    body: "对快照打包、加密、直传相关的代码做了全仓库检索。当前版本里没有未经确认的数据外发实现。",
+  },
+  {
+    title: "接通构建与发布",
+    body: "GitHub Actions 负责构建 CLI 发行包和部署本站。发版走 Release workflow，填一个版本号就能出包。",
   },
 ];
 
-export interface Commitment {
-  title: string;
-  body: string;
-  link?: { text: string; url: string };
-}
-
-export const commitments: Commitment[] = [
+export const nextSteps: WorkItem[] = [
   {
-    title: "跟踪并同步上游",
-    body: "及时审阅上游代码仓库的每一次改动，逐版本 diff 审计后只同步无风险代码；涉及数据外发、遥测扩张的改动不会直接合入，而是先记录并公开说明。",
-    link: { text: "zai-org/ZCode", url: "https://github.com/zai-org/ZCode" },
+    title: "逐提交审阅上游",
+    body: "zai-org/ZCode 的每次提交都做 diff 审计，不等发版才看。",
   },
   {
-    title: "过滤潜在有害代码",
-    body: "一旦发现静默外发、遥测越界、未经确认的数据上传实现，在本仓库移除或加装防护，并公开说明改了什么、为什么。",
+    title: "只同步无风险代码",
+    body: "数据外发、监控遥测、权限扩张这类改动会剥离或拒绝合入，并在审计记录里写明原因。",
   },
   {
-    title: "只信可验证的证据",
-    body: "“已删除”“不留存”“不用于训练”等无法独立验证的声明，不作为安全依据。审计结论以可复现的代码与行为为准。",
-  },
-  {
-    title: "公开审计记录",
-    body: "每次审计的方法、发现与局限性都记录在仓库和本网站中，欢迎开发者复核、质疑和补充。",
-  },
-  {
-    title: "GitHub 构建与发布",
-    body: "审计后的代码通过 GitHub Actions 构建，CLI 发行包发布到 Releases，站点自动部署到 GitHub Pages；所有产物都来自经过审计的源码。",
-    link: {
-      text: "Releases",
-      url: "https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases",
-    },
+    title: "同步后重新构建",
+    body: "每次同步都会构建并发布新的审计版本，产物全部来自本仓库的源码。",
   },
 ];
 

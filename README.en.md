@@ -9,29 +9,29 @@
   <a href="https://zcode-open-audit.github.io/Zcode-Open-Audit/">Project site</a>
 </p>
 
-> This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. We do not treat vendor promises as a security guarantee — we audit the code itself.
+> This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. Everything here is backed by code and reproducible checks.
 
 ## What we changed
 
-Compared with the upstream open-source release, this repository already:
+Compared with the upstream open-source release:
 
-1. **Rebranded and re-identified**: app name, window titles, About dialog, and app icons are now **ZCode Open Audit** (desktop app, CLI, and UI copy);
-2. **Removed all monitoring and telemetry**: ARMS RUM, OTLP, crash collection, resource and network sampling, UI instrumentation — roughly 26k lines deleted, with regression checks. See "What we removed" below;
-3. **Audited sensitive paths**: searched the whole repository for snapshot packaging, encryption, and direct-upload logic and confirmed there is no unconsented data-egress implementation in this version;
-4. **Built an audit and build pipeline**: per-version diff audits against upstream v3.14.0, with GitHub Actions building the CLI distribution and deploying the project site.
+- **Rebranded to ZCode Open Audit**: app name, window titles, About dialog, app icons, and the UI copy that used to say ZCode.
+- **Deleted all monitoring and telemetry**, about 26k lines: ARMS RUM, OTLP reporting, crash collection, resource and network sampling, UI instrumentation. Regression checks keep those exits from coming back (see "What we removed" below).
+- **Searched the sensitive paths**: snapshot packaging, encryption, and direct-upload code was reviewed across the repository; this version has no unconsented data egress.
+- **Wired up builds and releases**: GitHub Actions builds the CLI distribution and deploys this site; releases run through the Release workflow with a version number.
 
-> The audit is a static code search, not full dynamic forensics; findings and limitations will be updated continuously.
+The audit is a static code search, not full dynamic forensics. Findings and limits will be updated.
 
-## Our sync commitment
+## What happens next
 
-- **Audit every upstream commit immediately**: we continuously watch every commit in [zai-org/ZCode](https://github.com/zai-org/ZCode) and diff-audit it right away;
-- **Sync only after removing risky code**: only risk-free changes are synced here; anything involving data egress, monitoring/telemetry, or permission expansion is stripped or rejected, with a public note on what changed and why;
-- **Build the latest audited release**: after every sync we rebuild and publish a fresh audited distribution (see [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases));
-- **Publish audit records**: methods and conclusions are recorded in this repository and on the [project site](https://zcode-open-audit.github.io/Zcode-Open-Audit/); only verifiable evidence counts.
+- Every commit in [zai-org/ZCode](https://github.com/zai-org/ZCode) gets a diff audit, not just releases.
+- Only risk-free changes are synced. Code that does data egress, monitoring/telemetry, or permission expansion is stripped or rejected, with the reason recorded.
+- Every sync is followed by a rebuild and a new audited release (see [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases)).
+- Audit methods and conclusions stay in this repository and on the [project site](https://zcode-open-audit.github.io/Zcode-Open-Audit/). Review and challenge are welcome.
 
 ## Background
 
-This repository performs independent auditing and continuous hardening on the upstream open-source ZCode code. For the public discussion that motivated this work, please refer to the external sources below (this repository makes no finding of fact about their content):
+For the background and details, read the external coverage below; this repository makes no finding of fact about it:
 
 | Source                                     | Link                                                                   |
 | ------------------------------------------ | ---------------------------------------------------------------------- |
@@ -66,7 +66,7 @@ Compared with the upstream open-source release, this repository contains **no mo
 
 - **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases), and the project site is deployed automatically with GitHub Pages. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
 - **Release flow**: run the [Release](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/actions/workflows/release.yml) workflow manually in Actions, enter a version (for example `3.14.0-audit.1`) to create the tag, publish the release, and build and upload the CLI distribution; check pre-release to mark it as a Pre-release.
-- **Upstream sync**: review upstream changes → per-version diff audit → sync risk-free code only → publish conclusions in the audit record.
+- **Upstream sync**: review the change first, diff-audit it per version, and merge only the risk-free parts; conclusions go into the audit record.
 
 ## Disclaimer
 
