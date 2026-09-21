@@ -2,18 +2,18 @@
 
 <div align="center">
   <img src="public/logo/open-audit.svg" alt="ZCodium" width="96" height="96" />
-  <p><strong>ZCode 开源代码的独立审计与加固版本</strong></p>
+  <p><strong>ZCode 开源代码的独立审计版本</strong></p>
 </div>
 <p align="center">
   简体中文 | <a href="README.en.md">English</a> ·
-  <a href="https://zcode-open-audit.github.io/ZCodium/">项目网站</a>
+  <a href="https://zcodium-project.github.io/ZCodium/">项目网站</a>
 </p>
 
 > 本仓库 fork 自智谱 2026 年 9 月 21 日开源的 [zai-org/ZCode](https://github.com/zai-org/ZCode)。名字沿用 Chrome → Chromium、VS Code → VSCodium 的变形逻辑：**ZCode → ZCodium**。所有结论以代码和可复现的验证为准。
 
 ## 下载与安装
 
-[Releases](https://github.com/Zcode-Open-Audit/ZCodium/releases) 提供桌面客户端（macOS / Windows / Linux）和 CLI 发行包。所有安装包都**没有做代码签名**，首次打开会被系统拦截，执行下面的命令放行一次即可。
+[Releases](https://github.com/ZCodium-project/ZCodium/releases) 提供桌面客户端（macOS / Windows / Linux）和 CLI 发行包。所有安装包都**没有做代码签名**，首次打开会被系统拦截，执行下面的命令放行一次即可。
 
 ### macOS（.dmg）
 
@@ -54,7 +54,7 @@ CLI 发行包需要 Node.js 24。
 
 ## 和官方版本的对比
 
-| 对比项       | ZCodium（本仓库）                                 | 官方客户端（闭源）               | 官方开源版                 |
+| 对比项       | ZCodium（本仓库）                                          | 官方客户端（闭源）               | 官方开源版                 |
 | ------------ | ---------------------------------------------------------- | -------------------------------- | -------------------------- |
 | 监控与遥测   | **全部移除**（约 2.6 万行），并加防回归检查                | 全套默认开启，开关管不到打包上传 | 与闭源版相同               |
 | 仓库上传逻辑 | 已移除                                                     | 有（直到 2026-09-18 被曝光）     | 已移除（自 2026-09-21 起） |
@@ -77,8 +77,8 @@ CLI 发行包需要 Node.js 24。
 
 - 上游 [zai-org/ZCode](https://github.com/zai-org/ZCode) 的每次提交都会做 diff 审计，不等发版才看。
 - 只同步无风险的改动。数据外发、监控遥测、权限扩张这类代码会剥离或拒绝合入，并在审计记录里写明原因。
-- 每次同步后重新构建、发布新的审计版本（见 [Releases](https://github.com/Zcode-Open-Audit/ZCodium/releases)）。
-- 审计方法和结论留在仓库和[项目网站](https://zcode-open-audit.github.io/ZCodium/)，欢迎复核和质疑。
+- 每次同步后重新构建、发布新的审计版本（见 [Releases](https://github.com/ZCodium-project/ZCodium/releases)）。
+- 审计方法和结论留在仓库和[项目网站](https://zcodium-project.github.io/ZCodium/)，欢迎复核和质疑。
 
 ## 背景
 
@@ -115,8 +115,8 @@ CLI 发行包需要 Node.js 24。
 
 ## 构建与发布
 
-- **GitHub 构建**：审计后的代码在本仓库通过 GitHub Actions 构建，CLI 发行包随版本发布到 [Releases](https://github.com/Zcode-Open-Audit/ZCodium/releases)，站点通过 GitHub Pages 自动部署。所有产物都来自本仓库经过审计的源码，不包含上游未同步的改动。
-- **发版流程**：在 Actions 中手动运行 [Release](https://github.com/Zcode-Open-Audit/ZCodium/actions/workflows/release.yml) workflow，填写版本号（例如 `3.14.0-audit.1`），即可创建 tag、发布 Release 并构建上传 CLI 发行包；勾选预发布可标记为 Pre-release。
+- **GitHub 构建**：审计后的代码在本仓库通过 GitHub Actions 构建，CLI 发行包随版本发布到 [Releases](https://github.com/ZCodium-project/ZCodium/releases)，站点通过 GitHub Pages 自动部署。所有产物都来自本仓库经过审计的源码，不包含上游未同步的改动。
+- **发版流程**：在 Actions 中手动运行 [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow，填写版本号（例如 `3.14.0-audit.1`），即可创建 tag、发布 Release 并构建上传 CLI 发行包；勾选预发布可标记为 Pre-release。
 - **上游同步**：先审阅改动，再逐版本 diff 审计，只合入无风险部分；结论写在审计记录里。
 
 ## 免责声明

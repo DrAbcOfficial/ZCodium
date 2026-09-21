@@ -302,6 +302,6 @@ export const copy: Record<Lang, Copy> = {
   },
 };
 
-export const repoUrl = "https://github.com/Zcode-Open-Audit/ZCodium";
+export const repoUrl = "https://github.com/ZCodium-project/ZCodium";
 export const upstreamUrl = "https://github.com/zai-org/ZCode";
-export const releasesUrl = "https://github.com/Zcode-Open-Audit/ZCodium/releases";
+export const releasesUrl = "https://github.com/ZCodium-project/ZCodium/releases";

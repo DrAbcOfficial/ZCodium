@@ -25,8 +25,8 @@ function applyDocumentLang(lang: Lang) {
   description?.setAttribute(
     "content",
     lang === "zh"
-      ? "ZCode 开源代码的独立审计与加固版本：监控与遥测已全部移除，上游改动逐提交审阅，发行包从审计后的源码构建。"
-      : "An independently audited and hardened fork of the ZCode source: monitoring and telemetry removed, upstream commits reviewed one by one, artifacts built from the audited source.",
+      ? "ZCode 开源代码的独立审计版本：监控与遥测已全部移除，上游改动逐提交审阅，发行包从审计后的源码构建。"
+      : "An independent audit fork of the ZCode source: monitoring and telemetry removed, upstream commits reviewed one by one, artifacts built from the audited source.",
   );
 }
 
