@@ -271,6 +271,8 @@ Open `http://127.0.0.1:3030` to validate the complete flow, with one backend ser
 | `site`                                               | Audit project site (Vite + Svelte + Tailwind CSS), deployed with GitHub Pages           |
 | `scripts`, `config`, `third-party`                   | Build and maintenance scripts, built-in configuration, and third-party notice materials |
 
+The project site source lives in [site/](site/), built with Vite + Svelte + Tailwind CSS v4. Build output goes to `docs/` and is served by GitHub Pages. To publish an update, run `pnpm --dir site build` and commit the output under `docs/`.
+
 ## Project Notice
 
 See [NOTICE.md](NOTICE.md) for feature and promotion scope, maintenance policy, execution and data risks, licensing, and third-party copyright information.

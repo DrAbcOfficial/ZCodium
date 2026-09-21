@@ -281,6 +281,8 @@ node dist/zcode/debug/zcode/bin/zcode.mjs --web \
 | `site`                                               | 审计项目网站（Vite + Svelte + Tailwind CSS） |
 | `scripts`、`config`、`third-party`                   | 构建维护脚本、内置配置与第三方声明材料       |
 
+项目网站源码位于 [site/](site/)，使用 Vite + Svelte + Tailwind CSS v4 构建，产物输出到 `docs/`，由 GitHub Pages 托管。更新网站后，运行 `pnpm --dir site build` 并提交 `docs/` 下的构建产物即可发布。
+
 ## 项目声明
 
 功能与优惠范围、维护规则、执行与数据风险，以及许可和第三方版权说明，详见 [NOTICE.md](NOTICE.md)。
