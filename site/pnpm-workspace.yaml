@@ -1,0 +1,2 @@
+# site 是独立项目：避免继承仓库根的 workspace 与多平台安装配置。
+packages: []
