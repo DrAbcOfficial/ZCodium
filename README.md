@@ -52,8 +52,6 @@
 
 > **提示**：以下章节来自上游官方仓库 [zai-org/ZCode](https://github.com/zai-org/ZCode) 的 README，仅用于说明上游项目自身的安装与开发方式；其中的社群、链接、服务与承诺均由上游维护，与本审计仓库无关。
 
-上游社区：[飞书社群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=47ag983c-8fcb-4d6d-814b-5395193a712c&qr_code=true) · [Discord](https://discord.gg/z9aBcQXZQ3)
-
 ---
 
 ZCode 是 AI 编程工作台，提供桌面应用、浏览器界面和终端 Agent。本仓库包含客户端、后端服务、共享 UI，以及 Agent CLI 与运行时源码。

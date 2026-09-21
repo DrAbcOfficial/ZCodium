@@ -52,8 +52,6 @@ This repository is not affiliated with Zhipu (Beijing Zhipu Huazhang Technology 
 
 > **Note**: the sections below come from the official upstream repository [zai-org/ZCode](https://github.com/zai-org/ZCode) README and describe the upstream project itself. Its community links, services, and commitments are maintained by upstream and are not part of this audit fork.
 
-Upstream community: [Feishu community](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=47ag983c-8fcb-4d6d-814b-5395193a712c&qr_code=true) · [Discord](https://discord.gg/z9aBcQXZQ3)
-
 ---
 
 ZCode is an AI coding workspace with desktop, browser, and terminal interfaces. This repository contains the clients, backend services, shared UI, and Agent CLI and runtime source code.

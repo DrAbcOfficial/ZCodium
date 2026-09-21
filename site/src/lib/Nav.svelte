@@ -16,20 +16,23 @@
       href="#top"
       class="flex items-center gap-2.5 font-semibold whitespace-nowrap text-slate-100 no-underline"
     >
-      <svg class="h-[22px] w-[22px] shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M12 2.5 4.5 5.4v6.1c0 4.6 3.2 8.9 7.5 10 4.3-1.1 7.5-5.4 7.5-10V5.4L12 2.5Z"
-          stroke="#38bdf8"
-          stroke-width="1.6"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M8.8 12.1l2.2 2.2 4.4-4.6"
-          stroke="#38bdf8"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+      <svg class="h-[22px] w-[22px] shrink-0" viewBox="0 0 1024 1024" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient
+            id="oa-diagonal"
+            x1="712"
+            y1="224"
+            x2="300"
+            y2="800"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stop-color="#38bdf8" />
+            <stop offset="1" stop-color="#818cf8" />
+          </linearGradient>
+        </defs>
+        <path d="M184 224H512L453 308Q439 328 415 328H184Z" fill="#38bdf8" />
+        <path d="M584 224H832L424 800H176Z" fill="url(#oa-diagonal)" />
+        <path d="M536 720L600 656L648 704L824 528L888 592L648 832Z" fill="#38bdf8" />
       </svg>
       ZCode Open Audit
     </a>
