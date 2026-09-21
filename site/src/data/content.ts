@@ -37,5 +37,51 @@ export const nextSteps: WorkItem[] = [
   },
 ];
 
+export interface CompareRow {
+  item: string;
+  officialClient: string;
+  officialOss: string;
+  audit: string;
+}
+
+export const compareRows: CompareRow[] = [
+  {
+    item: "监控与遥测",
+    officialClient: "全套默认开启，开关管不到打包上传",
+    officialOss: "与闭源版相同",
+    audit: "全部移除（约 2.6 万行），并加防回归检查",
+  },
+  {
+    item: "仓库上传逻辑",
+    officialClient: "有（直到 2026-09-18 被曝光）",
+    officialOss: "已移除（自 2026-09-21 起）",
+    audit: "已移除",
+  },
+  {
+    item: "历史版本回溯",
+    officialClient: "旧版本下载链接已下架",
+    officialOss: "旧版本下载链接已下架",
+    audit: "保留全部历史版本与提交记录，供审计回溯",
+  },
+  {
+    item: "构建透明度",
+    officialClient: "官方二进制，构建不可复现",
+    officialOss: "不提供公开构建",
+    audit: "GitHub Actions 从仓库源码透明构建，产物随 Release 发布",
+  },
+  {
+    item: "Issue 与共建",
+    officialClient: "不开放",
+    officialOss: "关闭",
+    audit: "开放，欢迎提交 Issue 讨论",
+  },
+  {
+    item: "安装包签名",
+    officialClient: "已签名",
+    officialOss: "不提供安装包",
+    audit: "未签名（附一键放行命令）",
+  },
+];
+
 export const repoUrl = "https://github.com/Zcode-Open-Audit/Zcode-Open-Audit";
 export const upstreamUrl = "https://github.com/zai-org/ZCode";

@@ -3,6 +3,7 @@
   import GithubIcon from "./GithubIcon.svelte";
 
   const links = [
+    { href: "#compare", label: "对比" },
     { href: "#current", label: "改了什么" },
     { href: "#next", label: "接下来" },
   ];

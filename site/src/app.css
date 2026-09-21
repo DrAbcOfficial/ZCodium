@@ -167,6 +167,45 @@ body {
   color: #fcd88f;
 }
 
+/* ---------- 对比表 ---------- */
+.compare-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.compare-table th,
+.compare-table td {
+  border: 1px solid rgb(255 255 255 / 0.08);
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+  color: #9aa4b2;
+}
+
+.compare-table thead th {
+  background: var(--color-ink-800);
+  color: #e6eaf2;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.compare-table tbody th {
+  color: #e6eaf2;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.compare-table .is-audit {
+  background: rgb(56 189 248 / 0.06);
+  color: #cfe9fb;
+}
+
+.compare-table thead .is-audit {
+  color: #7dd3fc;
+}
+
 /* ---------- 滚动揭示 ---------- */
 .reveal {
   opacity: 0;
