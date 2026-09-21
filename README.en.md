@@ -11,6 +11,24 @@
 
 > This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. We do not treat vendor promises as a security guarantee — we audit the code itself.
 
+## What we changed
+
+Compared with the upstream open-source release, this repository already:
+
+1. **Rebranded and re-identified**: app name, window titles, About dialog, and app icons are now **ZCode Open Audit** (desktop app, CLI, and UI copy);
+2. **Removed all monitoring and telemetry**: ARMS RUM, OTLP, crash collection, resource and network sampling, UI instrumentation — roughly 26k lines deleted, with regression checks. See "What we removed" below;
+3. **Audited sensitive paths**: searched the whole repository for snapshot packaging, encryption, and direct-upload logic and confirmed there is no unconsented data-egress implementation in this version;
+4. **Built an audit and build pipeline**: per-version diff audits against upstream v3.14.0, with GitHub Actions building the CLI distribution and deploying the project site.
+
+> The audit is a static code search, not full dynamic forensics; findings and limitations will be updated continuously.
+
+## Our sync commitment
+
+- **Audit every upstream commit immediately**: we continuously watch every commit in [zai-org/ZCode](https://github.com/zai-org/ZCode) and diff-audit it right away;
+- **Sync only after removing risky code**: only risk-free changes are synced here; anything involving data egress, monitoring/telemetry, or permission expansion is stripped or rejected, with a public note on what changed and why;
+- **Build the latest audited release**: after every sync we rebuild and publish a fresh audited distribution (see [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases));
+- **Publish audit records**: methods and conclusions are recorded in this repository and on the [project site](https://zcode-open-audit.github.io/Zcode-Open-Audit/); only verifiable evidence counts.
+
 ## Background
 
 This repository performs independent auditing and continuous hardening on the upstream open-source ZCode code. For the public discussion that motivated this work, please refer to the external sources below (this repository makes no finding of fact about their content):
@@ -25,16 +43,6 @@ This repository performs independent auditing and continuous hardening on the up
 | ITHome coverage                            | https://www.ithome.com/1/005/046.htm                                   |
 | Huxiu coverage                             | https://www.huxiu.com/article/4892416.html                             |
 | ifeng coverage                             | https://tech.ifeng.com/c/8waIS4X7FAe                                   |
-
-## What we did
-
-This repository forks the client code Zhipu open-sourced on 2026-09-21 and completes a first-round independent audit and hardening:
-
-1. **Audit sensitive paths**: we searched the whole repository for snapshot packaging, encryption, and direct-upload logic, and confirmed there is no unconsented data-egress implementation in this version.
-2. **Remove all monitoring and telemetry**: we removed every monitoring/telemetry implementation from the desktop client, CLI, and UI (ARMS RUM, OTLP, crash collection, resource and network sampling, UI instrumentation — roughly 26k lines deleted). See "What we removed" below.
-3. **Establish a per-version audit baseline**: v3.14.0 is the baseline; every future upstream update gets a diff audit.
-
-> The first-round audit is a static code search, not full dynamic forensics. Findings and limitations will be updated continuously.
 
 ## What we removed
 
@@ -53,13 +61,6 @@ Compared with the upstream open-source release, this repository contains **no mo
 **Kept on purpose**: local logs (for troubleshooting), user-initiated feedback, and normal business requests (model calls, update checks). The device identifier is used only for business identity and local locks.
 
 **Verification**: the change passes `pnpm typecheck`, `pnpm lint` (0 errors), and per-module regression tests. Full lists and verification limits are in the removal reports: [desktop](packages/desktop/specs/telemetry-removal-report.md), [CLI](apps/zcode-cli/specs/telemetry-removal-report.md), [UI](packages/ui/specs/telemetry-removal-report.md).
-
-## What we will keep doing
-
-- **Track and sync upstream**: review every change in [zai-org/ZCode](https://github.com/zai-org/ZCode) promptly, run a per-version diff audit, and only sync risk-free code. Changes involving data exfiltration, telemetry overreach, or permission expansion are never merged directly; they are recorded and explained publicly first.
-- **Filter potentially harmful code**: if we find silent exfiltration, telemetry overreach, or unconsented data upload, we remove it or add guardrails in this repository, and disclose what changed and why.
-- **Trust verifiable evidence only**: claims such as "deleted", "not retained", or "never used for training" are not treated as security guarantees unless independently verifiable.
-- **Publish audit records**: findings, methods, and conclusions are recorded in this repository and on the [project site](https://zcode-open-audit.github.io/Zcode-Open-Audit/).
 
 ## Build and Release
 
