@@ -60,10 +60,16 @@
 
 ## 我们会继续做什么
 
-- **持续跟踪上游**：定期同步 [zai-org/ZCode](https://github.com/zai-org/ZCode)，对每个上游版本做逐版本 diff 审计。
+- **跟踪并同步上游**：及时审阅 [zai-org/ZCode](https://github.com/zai-org/ZCode) 的每一次改动，逐版本 diff 审计后只同步无风险代码；涉及数据外发、遥测扩张、权限扩张的改动不会直接合入，而是先记录并公开说明。
 - **过滤潜在有害代码**：一旦发现静默外发、遥测越界、未经确认的数据上传实现，在本仓库移除或加装防护，并公开说明改了什么、为什么。
 - **只信可验证的证据**：不以"已删除""不留存""不用于训练"等无法独立验证的声明作为安全依据。
 - **公开审计记录**：每次审计的发现、方法与结论记录在仓库和[项目网站](https://zcode-open-audit.github.io/Zcode-Open-Audit/)中。
+
+## 构建与发布
+
+- **GitHub 构建**：审计后的代码在本仓库通过 GitHub Actions 构建，CLI 发行包随版本发布到 [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases)，站点通过 GitHub Pages 自动部署。所有产物都来自本仓库经过审计的源码，不包含上游未同步的改动。
+- **发版流程**：在 Actions 中手动运行 [Release](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/actions/workflows/release.yml) workflow，填写版本号（例如 `3.14.0-audit.1`），即可创建 tag、发布 Release 并构建上传 CLI 发行包；勾选预发布可标记为 Pre-release。
+- **上游同步**：审阅上游改动 → 逐版本 diff 审计 → 只同步无风险代码 → 在审计记录中公开结论。
 
 ## 免责声明
 

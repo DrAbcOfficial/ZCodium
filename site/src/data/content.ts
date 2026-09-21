@@ -113,8 +113,8 @@ export interface Commitment {
 
 export const commitments: Commitment[] = [
   {
-    title: "持续跟踪上游",
-    body: "定期同步上游代码仓库，对每个上游版本做逐版本 diff 审计，而不是等下一次事件发生。",
+    title: "跟踪并同步上游",
+    body: "及时审阅上游代码仓库的每一次改动，逐版本 diff 审计后只同步无风险代码；涉及数据外发、遥测扩张的改动不会直接合入，而是先记录并公开说明。",
     link: { text: "zai-org/ZCode", url: "https://github.com/zai-org/ZCode" },
   },
   {
@@ -128,6 +128,14 @@ export const commitments: Commitment[] = [
   {
     title: "公开审计记录",
     body: "每次审计的方法、发现与局限性都记录在仓库和本网站中，欢迎开发者复核、质疑和补充。",
+  },
+  {
+    title: "GitHub 构建与发布",
+    body: "审计后的代码通过 GitHub Actions 构建，CLI 发行包发布到 Releases，站点自动部署到 GitHub Pages；所有产物都来自经过审计的源码。",
+    link: {
+      text: "Releases",
+      url: "https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases",
+    },
   },
 ];
 

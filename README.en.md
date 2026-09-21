@@ -60,10 +60,16 @@ This repository forks the client code Zhipu open-sourced on 2026-09-21 and compl
 
 ## What we will keep doing
 
-- **Track upstream continuously**: periodically sync [zai-org/ZCode](https://github.com/zai-org/ZCode) and run a per-version diff audit.
+- **Track and sync upstream**: review every change in [zai-org/ZCode](https://github.com/zai-org/ZCode) promptly, run a per-version diff audit, and only sync risk-free code. Changes involving data exfiltration, telemetry overreach, or permission expansion are never merged directly; they are recorded and explained publicly first.
 - **Filter potentially harmful code**: if we find silent exfiltration, telemetry overreach, or unconsented data upload, we remove it or add guardrails in this repository, and disclose what changed and why.
 - **Trust verifiable evidence only**: claims such as "deleted", "not retained", or "never used for training" are not treated as security guarantees unless independently verifiable.
 - **Publish audit records**: findings, methods, and conclusions are recorded in this repository and on the [project site](https://zcode-open-audit.github.io/Zcode-Open-Audit/).
+
+## Build and Release
+
+- **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/releases), and the project site is deployed automatically with GitHub Pages. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
+- **Release flow**: run the [Release](https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/actions/workflows/release.yml) workflow manually in Actions, enter a version (for example `3.14.0-audit.1`) to create the tag, publish the release, and build and upload the CLI distribution; check pre-release to mark it as a Pre-release.
+- **Upstream sync**: review upstream changes → per-version diff audit → sync risk-free code only → publish conclusions in the audit record.
 
 ## Disclaimer
 
