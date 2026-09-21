@@ -73,7 +73,7 @@ export const compareRows: CompareRow[] = [
     item: "Issue 与共建",
     officialClient: "不开放",
     officialOss: "关闭",
-    audit: "开放，欢迎提交 Issue 讨论",
+    audit: "开放（Issue 与 Discussions），欢迎共建讨论",
   },
   {
     item: "安装包签名",
