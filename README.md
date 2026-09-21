@@ -1,7 +1,7 @@
 # ZCode Open Audit
 
 <div align="center">
-  <img src="public/logo/icons/1024x1024.png" alt="ZCode" width="128" height="128" />
+  <img src="public/logo/open-audit.svg" alt="ZCode Open Audit" width="96" height="96" />
   <p><strong>ZCode 开源代码的独立审计与加固版本</strong></p>
 </div>
 <p align="center">
@@ -10,43 +10,14 @@
 </p>
 
 > 本仓库 fork 自智谱于 2026 年 9 月 21 日开源的 [zai-org/ZCode](https://github.com/zai-org/ZCode)。我们不把厂商承诺当作安全依据，只审计代码本身。
+>
+> 事件的完整始末（取证过程、技术细节、时间线、官方回应与未决问题）见 **[INCIDENT.md](INCIDENT.md)**。
 
 ## 为什么会有这个仓库
 
 2026 年 9 月 18 日，开发者 [ferstar](https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/) 公开完整逆向取证：ZCode 桌面客户端在用户登录状态下，会**在后台静默打包整个工作区（含完整 Git 历史），加密后尝试上传至阿里云 OSS**。多名开发者随后独立复现，智谱官方确认了该行为并致歉。
 
-公开证据揭示的关键事实：
-
-| 事实                   | 细节                                                                                                                                  |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| 上传范围远超推理需要   | 一个 42,411 文件样本中，`.git` 内部数据占 86.6%：完整提交历史、已删除的密钥、未推送分支、reflog、LFS 缓存；当前源码与文档只占约 13.4% |
-| 用户无法解密自己的数据 | AES-256-CTR 加密后，密钥再用服务端动态下发的 RSA 公钥封装；私钥只在云端，本地密文连用户与客户端都无法解开                             |
-| UI 里无法关闭          | "优化体验"只管训练授权，"仓库快照索引"只管服务端是否建索引；两份独立调查都确认没有任何开关能阻止本地打包与上传                        |
-| 高频自动触发           | 每次发送 Prompt 前捕获一次，单会话日志最多出现 62 次快照事件                                                                          |
-| 删除后自动重传         | 手动删除本地快照后，后台检测到缺失会重新全量打包并重试上传（原文记录失败重试 564 次）                                                 |
-
-### 事件时间线
-
-| 日期       | 事件                                                                                                             |
-| ---------- | ---------------------------------------------------------------------------------------------------------------- |
-| 2026-09-18 | ferstar 公开完整取证，开发者社区独立复现                                                                         |
-| 2026-09-18 | 智谱在用户群致歉：问题源于"代码库索引"功能默认开启，承诺开源客户端代码并引入第三方审计                           |
-| 2026-09-19 | ZCode v3.14.0 发布（更新日志："修复仓库百科异常上传的问题"）；ferstar 复查确认上传组件与接口已移除，接口返回 404 |
-| 2026-09-19 | 太原承明科技发函追责，就数据删除、私钥保管与是否跨境传输提出多项要求，并保留法律追责权利                         |
-| 2026-09-21 | 智谱正式开源 ZCode，公布中国信通院与绿盟科技首轮审计结果：存储桶已删除，v3.14.0 已切断本地仓库快照生成与上传链路 |
-
-### 一手资料与报道
-
-| 来源                               | 链接                                                                   |
-| ---------------------------------- | ---------------------------------------------------------------------- |
-| ferstar 原始调查（一手取证）       | https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/ |
-| 魔都水滴独立复现与防护方案         | https://blog.margrop.net/post/zcode-silent-git-upload-investigation/   |
-| 智谱官方开源仓库                   | https://github.com/zai-org/ZCode                                       |
-| 澎湃新闻：智谱回应与第三方审计结果 | https://www.thepaper.cn/newsDetail_forward_34111815                    |
-| 界面新闻：企业发函追责与官方回应   | https://www.jiemian.com/article/15120609.html                          |
-| IT之家：ZCode 官宣开源与致歉       | https://www.ithome.com/1/005/046.htm                                   |
-| 虎嗅：事件复盘与行业影响           | https://www.huxiu.com/article/4892416.html                             |
-| 凤凰网：企业追责与数据出境质疑     | https://tech.ifeng.com/c/8waIS4X7FAe                                   |
+事件的关键证据、完整时间线与一手资料见 **[INCIDENT.md](INCIDENT.md)**。
 
 ## 我们做了什么
 
@@ -77,7 +48,13 @@
 
 ---
 
-以下为上游 ZCode 项目的使用与开发文档。上游社区：[飞书社群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=47ag983c-8fcb-4d6d-814b-5395193a712c&qr_code=true) · [Discord](https://discord.gg/z9aBcQXZQ3)。
+# 官方 ZCode README（以下为上游原文）
+
+> **提示**：以下章节来自上游官方仓库 [zai-org/ZCode](https://github.com/zai-org/ZCode) 的 README，仅用于说明上游项目自身的安装与开发方式；其中的社群、链接、服务与承诺均由上游维护，与本审计仓库无关。
+
+上游社区：[飞书社群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=47ag983c-8fcb-4d6d-814b-5395193a712c&qr_code=true) · [Discord](https://discord.gg/z9aBcQXZQ3)
+
+---
 
 ZCode 是 AI 编程工作台，提供桌面应用、浏览器界面和终端 Agent。本仓库包含客户端、后端服务、共享 UI，以及 Agent CLI 与运行时源码。
 

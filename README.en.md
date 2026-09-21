@@ -1,7 +1,7 @@
 # ZCode Open Audit
 
 <div align="center">
-  <img src="public/logo/icons/1024x1024.png" alt="ZCode" width="128" height="128" />
+  <img src="public/logo/open-audit.svg" alt="ZCode Open Audit" width="96" height="96" />
   <p><strong>An independent security audit and hardening fork of ZCode</strong></p>
 </div>
 <p align="center">
@@ -10,43 +10,14 @@
 </p>
 
 > This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. We do not treat vendor promises as a security guarantee — we audit the code itself.
+>
+> Read the full incident write-up — discovery, technical evidence, timeline, official response, and open questions — in **[INCIDENT.en.md](INCIDENT.en.md)**.
 
 ## Why this fork exists
 
 On September 18, 2026, developer [ferstar](https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/) published a full reverse-engineering investigation: while a user was signed in, the ZCode desktop client **silently packaged the entire workspace — including the complete Git history — encrypted it, and attempted to upload it to Alibaba Cloud OSS**. Multiple developers independently reproduced the findings, and Zhipu confirmed the behavior and apologized.
 
-Key facts from the public evidence:
-
-| Fact                                | Detail                                                                                                                                                                                                  |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Far beyond what inference needs     | In a 42,411-file sample, `.git` data accounted for 86.6%: full commit history, deleted secrets, unpushed branches, reflog, and LFS cache. Current source and docs were only about 13.4%                 |
-| Users cannot decrypt their own data | AES-256-CTR encryption with the key wrapped by an RSA public key issued dynamically by the server. The private key exists only in the cloud; neither users nor the client can open the local ciphertext |
-| No way to turn it off in the UI     | "Optimize experience" only controls training consent; "Repository snapshot indexing" only controls server-side indexing. Two independent investigations found no switch that stops packaging or upload  |
-| High-frequency automatic triggers   | A snapshot was captured before every prompt; a single session log showed up to 62 snapshot events                                                                                                       |
-| Auto re-upload after deletion       | After manually deleting the local snapshot, the background watcher re-packaged the whole workspace and retried upload (the original report recorded 564 failed attempts)                                |
-
-### Timeline
-
-| Date       | Event                                                                                                                                                                                                |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-09-18 | ferstar publishes the full investigation; developers independently reproduce it                                                                                                                      |
-| 2026-09-18 | Zhipu apologizes in its user group: the behavior came from the "codebase indexing" feature being enabled by default; promises to open-source the client and bring in third-party audits              |
-| 2026-09-19 | ZCode v3.14.0 ships ("fixes abnormal repo wiki uploads"); ferstar re-checks and confirms the upload component and endpoint are gone (endpoint returns 404)                                           |
-| 2026-09-19 | Taiyuan Chengming Technology sends a formal demand letter on data deletion, private-key custody, and possible cross-border transfer, reserving the right to legal action                             |
-| 2026-09-21 | Zhipu open-sources ZCode and publishes the first-round audit results from CAICT and NSFOCUS: the OSS bucket has been deleted, and v3.14.0 has removed the local snapshot generation and upload chain |
-
-### Primary sources and coverage
-
-| Source                                        | Link                                                                   |
-| --------------------------------------------- | ---------------------------------------------------------------------- |
-| ferstar's original investigation (first-hand) | https://blog.ferstar.org/posts/zcode-silent-workspace-snapshot-upload/ |
-| Independent reproduction and mitigations      | https://blog.margrop.net/post/zcode-silent-git-upload-investigation/   |
-| Official open-source repository               | https://github.com/zai-org/ZCode                                       |
-| The Paper: Zhipu response and audit results   | https://www.thepaper.cn/newsDetail_forward_34111815                    |
-| Jiemian News: demand letter and responses     | https://www.jiemian.com/article/15120609.html                          |
-| ITHome: open-sourcing and apology             | https://www.ithome.com/1/005/046.htm                                   |
-| Huxiu: incident retrospective                 | https://www.huxiu.com/article/4892416.html                             |
-| ifeng: cross-border data questions            | https://tech.ifeng.com/c/8waIS4X7FAe                                   |
+The key evidence, full timeline, and primary sources are documented in **[INCIDENT.en.md](INCIDENT.en.md)**.
 
 ## What we did
 
@@ -77,7 +48,13 @@ This repository is not affiliated with Zhipu (Beijing Zhipu Huazhang Technology 
 
 ---
 
-The sections below are the upstream ZCode usage and development documentation. Upstream community: [Feishu community](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=47ag983c-8fcb-4d6d-814b-5395193a712c&qr_code=true) · [Discord](https://discord.gg/z9aBcQXZQ3).
+# Official ZCode README (upstream content below)
+
+> **Note**: the sections below come from the official upstream repository [zai-org/ZCode](https://github.com/zai-org/ZCode) README and describe the upstream project itself. Its community links, services, and commitments are maintained by upstream and are not part of this audit fork.
+
+Upstream community: [Feishu community](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=47ag983c-8fcb-4d6d-814b-5395193a712c&qr_code=true) · [Discord](https://discord.gg/z9aBcQXZQ3)
+
+---
 
 ZCode is an AI coding workspace with desktop, browser, and terminal interfaces. This repository contains the clients, backend services, shared UI, and Agent CLI and runtime source code.
 

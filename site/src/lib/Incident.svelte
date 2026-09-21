@@ -16,6 +16,14 @@
       > 占用异常，顺藤摸瓜还原出一条完整的<strong>静默打包、加密、直传对象存储</strong>链路。多名开发者随后独立复现，智谱官方确认并致歉。
     </p>
 
+    <p class="mb-10 text-[14.5px]">
+      <a
+        class="text-sky-400 hover:underline"
+        href="https://github.com/Zcode-Open-Audit/Zcode-Open-Audit/blob/main/INCIDENT.md"
+        >阅读完整事件文档（取证过程、技术细节、未决问题）</a
+      >
+    </p>
+
     <div class="mb-16 grid gap-4 md:grid-cols-2">
       {#each facts as fact}
         <div class="card" use:reveal>
