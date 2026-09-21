@@ -36,8 +36,8 @@ Unblock-File -Path "$env:USERPROFILE\Downloads\ZCode*win-x64.exe"
 ### Linux（.AppImage）
 
 ```bash
-chmod +x ZCode*linux-x64.AppImage
-./ZCode*linux-x64.AppImage
+chmod +x ZCode*linux*.AppImage
+./ZCode*linux*.AppImage
 ```
 
 ### CLI 发行包（.tar.gz）

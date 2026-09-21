@@ -18,6 +18,13 @@
     assets?: ReleaseAsset[];
   }
 
+  const OS_ASSET_PATTERNS: Record<OsKind, RegExp> = {
+    macos: /\.dmg$/i,
+    windows: /\.exe$/i,
+    linux: /\.AppImage$/i,
+    unknown: /\.tar\.gz$/i,
+  };
+
   let os = $state<OsKind>("unknown");
   let version = $state("");
   let downloadUrl = $state(RELEASES_URL);
@@ -34,14 +41,16 @@
       if (!res.ok) return;
       const list = (await res.json()) as ReleaseInfo[];
       if (!Array.isArray(list)) return;
-      const release = list.find((item) =>
-        (item.assets ?? []).some((asset) => asset.name?.endsWith(".tar.gz")),
-      );
+      const release = list.find((item) => (item.assets ?? []).length > 0);
       if (!release) return;
       version = release.tag_name ?? "";
-      const asset = (release.assets ?? []).find((item) => item.name?.endsWith(".tar.gz"));
-      if (asset?.browser_download_url) {
-        downloadUrl = asset.browser_download_url;
+      const assets = release.assets ?? [];
+      // 先找当前系统的桌面安装包，找不到再退回 CLI 发行包。
+      const preferred =
+        assets.find((item) => item.name && OS_ASSET_PATTERNS[os].test(item.name)) ??
+        assets.find((item) => item.name?.endsWith(".tar.gz"));
+      if (preferred?.browser_download_url) {
+        downloadUrl = preferred.browser_download_url;
       }
     } catch {
       // 网络不可用时保持 Release 页面链接
@@ -53,9 +62,13 @@
   );
 
   const installHint = $derived(
-    os === "windows"
-      ? "CLI 发行包，需 Node.js 24；在 Git Bash 或 WSL 里解压运行"
-      : "CLI 发行包，需 Node.js 24；解压后运行 install.sh",
+    os === "macos"
+      ? "未签名的 .dmg：拖入“应用程序”后，用 sudo xattr -rd com.apple.quarantine 放行一次"
+      : os === "windows"
+        ? "未签名的 .exe：安装前先执行 Unblock-File 解除阻止"
+        : os === "linux"
+          ? "未签名的 .AppImage：chmod +x 后直接运行"
+          : "CLI 发行包，需要 Node.js 24",
   );
 </script>
 
@@ -86,6 +99,6 @@
     </a>
   </div>
   <p class="text-[13px] text-slate-500">
-    {installHint} · <a class="text-sky-400 hover:underline" href={RELEASES_URL}>全部版本</a>
+    {installHint} · <a class="text-sky-400 hover:underline" href={RELEASES_URL}>全部版本与安装命令</a>
   </p>
 </div>
