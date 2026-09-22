@@ -20,15 +20,15 @@
 ### macOS（.dmg）
 
 1. 按机型下载 `ZCodium-*-mac-arm64.dmg`（Apple Silicon）或 `ZCodium-*-mac-x64.dmg`（Intel），打开后把 ZCodium 拖进“应用程序”。
-2. 因为未签名、未公证，Gatekeeper 会提示“无法验证开发者”或“已损坏”。任选一种方式放行：
+2. 因为未签名、未公证，Gatekeeper 会提示“无法验证开发者”或“已损坏”。**先把应用拖进「应用程序」，再执行**下面命令（提示输入密码时输入开机密码，输入过程屏幕上不显示任何字符）：
 
    ```bash
-   # 方式一（推荐，命令行放行一次）：
-   sudo xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
+   # 命令行放行一次：
+   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
    open -a "ZCodium"
    ```
 
-   方式二：在“访达”里右键（Control-点击）应用 → 选择“打开” → 弹窗里再点“打开”。之后就能正常双击启动了。
+   命令使用 `/usr/bin/xattr` 绝对路径，避免 PATH 里其他同名工具（例如 Python 的 xattr）报 “option -r not recognized”。也可以右键（Control-点击）应用 → 选择“打开” → 弹窗里再点“打开”。之后就能正常双击启动了。
 
 ### Windows（.exe）
 
@@ -274,10 +274,10 @@ pnpm bundle:desktop -- --help
 
 默认目标为 macOS arm64，默认输出目录为 `packages/desktop/dist/`。`--os` 支持 `mac`、`win`、`linux`，`--arch` 支持 `x64`、`arm64`；实际打包与签名需要目标平台对应的工具和配置。
 
-安装：双击打开产物 DMG，将 ZCode 拖入"应用程序"。本地构建未签名，首次打开若被 macOS 拦截，执行：
+安装：双击打开产物 DMG，将 ZCodium 拖入"应用程序"。本地构建未签名，首次打开若被 macOS 拦截，执行：
 
 ```bash
-sudo xattr -rd com.apple.quarantine /Applications/ZCode.app
+sudo /usr/bin/xattr -rd com.apple.quarantine /Applications/ZCodium.app
 ```
 
 ### ZCode 命令行版

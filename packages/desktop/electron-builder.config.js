@@ -738,21 +738,24 @@ export default {
       // 实验性调整：为隐藏资源文件显式指定图标坐标，尽量把它们移到角落区域。
       { x: 640, y: 56, type: "file", path: ".background.tiff" },
       { x: 640, y: 56, type: "file", path: ".VolumeIcon.icns" },
-      { x: 150, y: 220 },
-      { x: 470, y: 220, type: "link", path: "/Applications" },
+      // 应用图标与 Applications 链接上移：Finder 窗口外框比图标视图内容区高约 70px（工具栏），
+      // 背景（620x560）比可见内容区更高，所有元素必须排在顶部可见区内，否则需要滚动才能看到说明文件。
+      { x: 150, y: 120 },
+      { x: 470, y: 120, type: "link", path: "/Applications" },
       // 未签名安装包在首次打开时会被 Gatekeeper 拦截；背景在对应位置画了箭头，
-      // 指向这两个可复制解除命令的纯文本文件。path 用绝对路径，避免 dmgbuild 依赖工作目录解析。
+      // 指向两个可复制解除命令的纯文本文件（各自母语文件名，不带语言后缀）。
+      // path 用绝对路径，避免 dmgbuild 依赖工作目录解析。
       {
         x: 170,
-        y: 400,
+        y: 370,
         type: "file",
-        path: resolve(desktopPackageRoot, "build/dmg/解除拦截-中文.txt"),
+        path: resolve(desktopPackageRoot, "build/dmg/解除拦截.txt"),
       },
       {
         x: 450,
-        y: 400,
+        y: 370,
         type: "file",
-        path: resolve(desktopPackageRoot, "build/dmg/解除拦截-英文.txt"),
+        path: resolve(desktopPackageRoot, "build/dmg/Unblock.txt"),
       },
     ],
   },

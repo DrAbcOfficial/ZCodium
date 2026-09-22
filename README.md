@@ -20,15 +20,15 @@ The [Releases](https://github.com/ZCodium-project/ZCodium/releases) page ships d
 ### macOS (.dmg)
 
 1. Download `ZCodium-*-mac-arm64.dmg` (Apple Silicon) or `ZCodium-*-mac-x64.dmg` (Intel), open it and drag ZCodium into Applications.
-2. The app is unsigned and not notarized, so Gatekeeper will say the developer cannot be verified (or that the app is damaged). Allow it either way:
+2. The app is unsigned and not notarized, so Gatekeeper will say the developer cannot be verified (or that the app is damaged). **After dragging the app into Applications**, run the command below (enter your login password when asked; nothing is shown while typing):
 
    ```bash
-   # Option 1 (recommended, one-time command):
-   sudo xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
+   # One-time command:
+   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
    open -a "ZCodium"
    ```
 
-   Option 2: right-click (Control-click) the app in Finder → Open → click Open again in the dialog. Afterwards it launches normally with a double-click.
+   The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name (for example the Python xattr package), which fail with "option -r not recognized". Alternatively, right-click (Control-click) the app in Finder → Open → click Open again in the dialog. Afterwards it launches normally with a double-click.
 
 ### Windows (.exe)
 
