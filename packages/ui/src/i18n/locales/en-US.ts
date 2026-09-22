@@ -424,7 +424,7 @@ const enUS: Record<string, string> = {
   "conversationShare.import.complete": "Share import complete",
   "conversationShare.import.loginRequired":
     "This share cannot be imported anonymously. Sign in to ZCodium and try again",
-  "conversationShare.import.notFound": "The share is unavailable for this account",
+  "conversationShare.import.notFound": "The share is unavailable",
   "conversationShare.import.expired": "The share expired. Ask the author to create a new one",
   "conversationShare.import.integrityFailed": "Share file verification failed; import stopped",
   "conversationShare.import.failed": "Share import failed. Check your network and retry",
@@ -554,8 +554,8 @@ const enUS: Record<string, string> = {
   "welcome.login": "Login",
   "welcome.loggingIn": "Logging in...",
   "welcome.loginFailed": "Login failed",
-  "login.title": "Welcome to ZCodium",
-  "login.description": "Connect your account to start using ZCodium",
+  "login.title": "API Setup",
+  "login.description": "Configure an API key to start using ZCodium",
   "login.oauth.activeProviderHint":
     "Current active provider: {provider}. Signing in again replaces the current identity.",
   "login.oauth.loadingProviders": "Loading account providers...",
@@ -570,9 +570,9 @@ const enUS: Record<string, string> = {
   "login.oauth.loginFailure": "Login failed, please try again",
   "login.oauth.cancel": "Cancel",
   "login.oauth.retry": "Retry login",
-  "login.expired.title": "Your session has expired",
-  "login.expired.description": "To keep your account secure, please sign in again.",
-  "login.expired.action": "Sign in again",
+  "login.expired.title": "Your configuration has expired",
+  "login.expired.description": "Your API key configuration is no longer valid. Please set it up again.",
+  "login.expired.action": "Configure again",
   "login.expired.restart": "Confirm and restart",
   "login.useApiKey": "Use API key",
   "login.apiKey.title": "API Key",
@@ -602,7 +602,7 @@ const enUS: Record<string, string> = {
   "logout.confirm.descriptionWithRunningSessions":
     "{count} session(s) are currently running. Disconnecting will interrupt them and restart the app.",
   "logout.confirm.descriptionDefault":
-    "The app will restart after disconnecting. You will need to connect your account again.",
+    "The app will restart. Configure the API key again to continue.",
   "logout.confirm.ok": "Disconnect and restart",
   "logout.confirm.cancel": "Cancel",
   "sidebar.profile.notLoggedIn": "Connect",
@@ -2026,9 +2026,9 @@ const enUS: Record<string, string> = {
   "settings.officialServices.title": "Z.AI service connections",
   "settings.officialServices.description":
     "These are Z.AI (ZCode) services. Turning one on connects to Z.AI servers — keep them off unless you need them.",
-  "settings.officialServices.account.title": "Z.AI account sign-in",
+  "settings.officialServices.account.title": "Z.AI API configuration",
   "settings.officialServices.account.desc":
-    "Sign in with a Z.AI account and use account features.",
+    "Configure a Z.AI API key to use related capabilities.",
   "settings.officialServices.codingPlan.title": "Plan and quota",
   "settings.officialServices.codingPlan.desc": "Check the Z.AI plan, quota and usage.",
   "settings.officialServices.feedback.title": "Z.AI feedback channel",
@@ -2322,9 +2322,9 @@ const enUS: Record<string, string> = {
   "settings.mcp.failure.official_origin_untrusted":
     "The MCP server URL failed the security check. The connection was blocked.",
   "settings.mcp.failure.not_authenticated":
-    "You are not signed in. Sign in to ZCodium to use this MCP server.",
+    "No API key configured. Please configure one first.",
   "settings.mcp.failure.coding_plan_required":
-    "This account has no Coding Plan. Purchase or configure a Coding Plan to use this MCP server.",
+    "No Coding Plan configured. Configure one in model settings first.",
   "settings.mcp.failure.server_not_found":
     "The MCP server was not found. Check the plugin or server configuration.",
   "settings.mcp.failure.server_unavailable":
@@ -2496,13 +2496,13 @@ const enUS: Record<string, string> = {
   "settings.modelProvider.connectionMode.loadFailed": "Connection settings failed",
   "settings.modelProvider.connectionMode.noAvailablePlan": "No available plan",
   "settings.modelProvider.accountProviderConfigMissing":
-    "The account provider configuration is unavailable. Refresh and try again.",
-  "settings.modelProvider.startPlan.login": "Log in",
-  "settings.modelProvider.startPlan.status.loginRequired": "Log in to view and use your Start Plan",
+    "Provider configuration is temporarily unavailable. Refresh and retry.",
+  "settings.modelProvider.startPlan.login": "Configure API",
+  "settings.modelProvider.startPlan.status.loginRequired": "Configure an API key to view",
   "settings.modelProvider.startPlan.status.expired": "Start Plan expired",
   "settings.modelProvider.startPlan.status.noPlan": "No available Start Plan",
   "settings.modelProvider.startPlan.status.loginExpired":
-    "Your login has expired. Please log in again.",
+    "API key expired. Configure it again.",
   "settings.modelProvider.startPlan.title": "{provider} - Coding Plan",
   "settings.modelProvider.startPlan.meta.today": "Today",
   "settings.modelProvider.startPlan.meta.tomorrow": "Tomorrow",
@@ -2520,7 +2520,7 @@ const enUS: Record<string, string> = {
   "settings.modelProvider.startPlan.highlight.trial.label": "Trial period",
   "settings.modelProvider.startPlan.highlight.trial.value": "5 calendar days",
   "settings.modelProvider.startPlan.highlight.trial.description":
-    "Timing starts after signing in to ZCodium 3.x.",
+    "Starts when an API key is configured.",
   "settings.modelProvider.startPlan.highlight.quota.label": "Daily quota",
   "settings.modelProvider.startPlan.highlight.quota.value": "3M tokens daily",
   "settings.modelProvider.startPlan.highlight.quota.description":
@@ -2532,17 +2532,17 @@ const enUS: Record<string, string> = {
   "settings.modelProvider.startPlan.compatibility":
     "Supports BYOK and BYOA. Base URL, API format, and API Key are maintained by ZCodium automatically.",
   "settings.modelProvider.codingPlan.title": "{provider} - Coding Plan",
-  "settings.modelProvider.codingPlan.webview.title": "Upgrade Plan",
+  "settings.modelProvider.codingPlan.webview.title": "Coding Plan",
   "settings.modelProvider.codingPlan.webview.authInjectFailed":
-    "Couldn't sign you into the plan page. Please retry.",
+    "Could not open the plan page. Try again.",
   "settings.modelProvider.codingPlan.webview.retry": "Retry",
   "settings.modelProvider.codingPlan.webview.loadFailed": "The plan page failed to load.",
-  "settings.modelProvider.codingPlan.webview.openWebsite": "Buy on the official website",
-  "settings.modelProvider.codingPlan.status.loginRequired": "Not signed in",
+  "settings.modelProvider.codingPlan.webview.openWebsite": "Open website",
+  "settings.modelProvider.codingPlan.status.loginRequired": "Not configured",
   "settings.modelProvider.codingPlan.status.disconnected": "Not connected",
   "settings.modelProvider.codingPlan.status.checking": "Checking",
   "settings.modelProvider.codingPlan.status.notPurchased":
-    "Not subscribed, enabled after subscription",
+    "Not configured",
   "settings.modelProvider.codingPlan.status.purchased": "Subscribed",
   "settings.modelProvider.codingPlan.status.unavailable": "Fetch failed",
   "settings.modelProvider.codingPlan.status.teamExpired":
@@ -2551,22 +2551,22 @@ const enUS: Record<string, string> = {
     "Team plan not assigned. Contact your team admin.",
   "settings.modelProvider.codingPlan.status.unsupported": "Not supported yet",
   "settings.modelProvider.codingPlan.bigmodel.unregisteredHint":
-    "This BigModel account is not registered yet. Register first.",
+    "This BigModel API key is not registered yet. Please register first.",
   "settings.modelProvider.codingPlan.bigmodel.registerAction": "Register",
   "settings.modelProvider.codingPlan.description.disconnected":
     "Connect to view Coding Plan entitlements.",
   "settings.modelProvider.codingPlan.description.checking":
     "Checking Coding Plan entitlement with the current provider API key.",
   "settings.modelProvider.codingPlan.description.credentialFailed":
-    "Failed to retrieve your plan. Please sign in again and retry.",
+    "Could not fetch the plan. Re-configure the API key and retry.",
   "settings.modelProvider.codingPlan.description.unavailable":
-    "Could not verify Coding Plan entitlement. Connect again and retry.",
+    "Coding Plan entitlement is temporarily unavailable. Re-configure and retry.",
   "settings.modelProvider.codingPlan.description.unsupported":
     "This provider does not support Coding Plan status checks yet.",
-  "settings.modelProvider.codingPlan.login": "Sign in to {provider}",
-  "settings.modelProvider.codingPlan.connect": "Connect to {provider}",
+  "settings.modelProvider.codingPlan.login": "Configure {provider} API key",
+  "settings.modelProvider.codingPlan.connect": "Configure {provider}",
   "settings.modelProvider.codingPlan.disconnect": "Unlink",
-  "settings.modelProvider.codingPlan.upgrade": "Upgrade",
+  "settings.modelProvider.codingPlan.upgrade": "Configure",
   "settings.modelProvider.codingPlan.currentPlan": "Current",
   "settings.modelProvider.codingPlan.startPlan.expiredBadge": "Expired",
   "settings.modelProvider.codingPlan.startPlan.expiredAction": "Ended",
@@ -2590,7 +2590,7 @@ const enUS: Record<string, string> = {
   "settings.modelProvider.planCard.usage.totalTokens": "Total tokens",
   "settings.modelProvider.codingPlan.recheck": "Recheck",
   "settings.modelProvider.codingPlan.checkingPlans": "Checking...",
-  "settings.modelProvider.codingPlan.switchAccount": "Switch account",
+  "settings.modelProvider.codingPlan.switchAccount": "Switch API key",
   "settings.modelProvider.codingPlan.useApiKeyProvider": "Use API key",
   "settings.modelProvider.codingPlan.nextResetAt": "Quota resets {date}",
   "settings.modelProvider.codingPlan.renewsAt": "Renews {date}",
@@ -2753,19 +2753,19 @@ const enUS: Record<string, string> = {
   "settings.usage.sourceProvider": "Source: {provider}",
   "settings.usage.billingBanner.title": "{provider} Coding Plan",
   "settings.usage.billingBanner.description":
-    "Connect your {provider} account to query Coding Plan entitlement, then keep coding in ZCodium after purchase or setup.",
+    "Configure the {provider} API key to query usage.",
   "settings.usage.billingBanner.compactDescription":
-    "Connect your {provider} account to sync usage.",
-  "settings.usage.billingBanner.buy": "Buy Coding Plan",
+    "Configure the {provider} API key to sync usage.",
+  "settings.usage.billingBanner.buy": "Configure Coding Plan",
   "settings.usage.billingBanner.apiKeys": "API keys",
   "settings.usage.billingBanner.usageDetails": "Usage details",
   "settings.usage.entitlementTitle": "Coding Plan entitlement",
   "settings.usage.entitlementDescription":
-    "Sync exact plan level, 5-hour prompt pool, weekly quota, and monthly tool quota from the connected Coding Plan account.",
+    "Sync plan tier, 5-hour prompt pool, weekly quota and monthly tool quota from the configured Coding Plan.",
   "settings.usage.entitlementError":
     "Unable to load Coding Plan entitlement. Try again later or check the provider configuration.",
   "usage.error.entitlement.credential":
-    "No Coding Plan entitlement was found. Reconnect the Coding Plan account or confirm that the account has an active plan.",
+    "Coding Plan entitlement not found. Re-configure the API key, or confirm the Coding Plan is active.",
   "usage.error.entitlement.generic":
     "Unable to load Coding Plan entitlement. Try again later or check the provider configuration.",
   "settings.usage.entitlementRemaining": "Tool usage",
@@ -2823,14 +2823,14 @@ const enUS: Record<string, string> = {
   "settings.usage.entitlementConcurrencyValue": "{value}",
   "settings.usage.entitlementPolicyHint":
     "Quota values follow the current usage guide and may change with platform policy.",
-  "settings.usage.entitlementLoginRequired": "Login required",
+  "settings.usage.entitlementLoginRequired": "Configure an API key first",
   "settings.usage.entitlementNotConfigured":
-    "No connected Z.ai or BigModel Coding Plan account is available for quota lookup. Connect a Coding Plan account first.",
+    "No Z.ai / BigModel configuration found for quota queries. Configure an API key first.",
   "settings.usage.entitlementStatusActive": "Active",
   "settings.usage.entitlementStatusError": "Error",
   "settings.usage.entitlementStatusLoading": "Loading",
-  "settings.usage.entitlementStatusLoginRequired": "Login required",
-  "settings.usage.entitlementStatusNoPlan": "Not subscribed",
+  "settings.usage.entitlementStatusLoginRequired": "API key required",
+  "settings.usage.entitlementStatusNoPlan": "Not configured",
   "settings.usage.entitlementStatusNotConfigured": "Not configured",
   "sidebar.usage.summaryTitle": "Last 30 days",
   "sidebar.usage.plan.title": "Usage remaining",
@@ -2842,9 +2842,9 @@ const enUS: Record<string, string> = {
   "sidebar.usage.plan.open": "More",
   "sidebar.usage.plan.loading": "Syncing...",
   "sidebar.usage.plan.unavailable": "No available entitlement data yet.",
-  "sidebar.usage.plan.loginRequired": "Login to view plan usage.",
-  "sidebar.usage.plan.notConfigured": "No connected Coding Plan account found.",
-  "sidebar.usage.plan.noPlanShort": "No plan",
+  "sidebar.usage.plan.loginRequired": "Configure an API key to see remaining quota.",
+  "sidebar.usage.plan.notConfigured": "No Coding Plan configured.",
+  "sidebar.usage.plan.noPlanShort": "Not configured",
   "sidebar.usage.plan.remainingShort": "{value} left",
   "sidebar.usage.plan.planTypeValue": "Plan: {plan}",
   "sidebar.usage.plan.tokensLimit": "Token quota",
@@ -2879,7 +2879,7 @@ const enUS: Record<string, string> = {
   "chat.planUsage.providerFallback": "Current provider",
   "chat.planUsage.open": "Details",
   "chat.planUsage.noPlan":
-    "No active Coding Plan was found for this account. Confirm that the connected account is subscribed.",
+    "No active Coding Plan configuration.",
   "chat.planUsage.contextWindow": "Current context window",
   "chat.planUsage.contextDetail": "{used} / {total}",
   "chat.planUsage.promptPool": "5-hour prompt pool",
@@ -2892,7 +2892,7 @@ const enUS: Record<string, string> = {
   "chat.planUsage.noQuotaLimits":
     "No Coding Plan quota was found. Confirm that the connected account has an active Coding Plan.",
   "usage.error.chatPlan.credential":
-    "Unable to read plan quota. Reconnect the Coding Plan account or confirm that the account has an active plan.",
+    "Could not read quota. Re-configure the API key, or confirm the Coding Plan is active.",
   "usage.error.chatPlan.generic":
     "Unable to read plan quota. Try again later or check the provider configuration.",
   "settings.usage.range.all": "All time",
@@ -2921,9 +2921,9 @@ const enUS: Record<string, string> = {
   "settings.usage.lastRefreshTime": "Last refreshed: {time}",
   "settings.usage.error":
     "Unable to load usage stats. Try again later or check the network and provider configuration.",
-  "settings.usage.checkApiKey": "Check account",
+  "settings.usage.checkApiKey": "Check API key",
   "usage.error.stats.credential":
-    "Unable to load usage stats. Reconnect the Coding Plan account or confirm that the account has an active plan.",
+    "Could not read usage stats. Re-configure the API key, or confirm the Coding Plan is active.",
   "usage.error.stats.generic":
     "Unable to load usage stats. Try again later or check the network and provider configuration.",
   "settings.usage.emptyTitle": "No usage data yet",
@@ -2997,8 +2997,8 @@ const enUS: Record<string, string> = {
   "settings.usage.dayLabel.wed": "Wed",
   "settings.usage.dayLabel.fri": "Fri",
   "settings.modelProvider.presetDescription":
-    "Built-in Z.ai and BigModel providers with OAuth-assisted configuration.",
-  "settings.modelProvider.presetEmpty": "Not synced yet. Complete OAuth login first.",
+    "Built-in Z.ai and BigModel providers; configure them with an API key.",
+  "settings.modelProvider.presetEmpty": "Not synced yet. Configure an API key first.",
   "settings.modelProvider.customTitle": "Custom providers",
   "settings.modelProvider.refresh": "Refresh",
   "settings.modelProvider.reorderProvider": "Drag to reorder provider",
@@ -5047,8 +5047,8 @@ const enUS: Record<string, string> = {
   "chat.error.processExited": "Agent process exited unexpectedly",
   "chat.error.dismiss": "Dismiss error",
   "chat.error.retry": "Retry",
-  "chat.error.reloginProvider": "Sign in to {provider}",
-  "chat.error.action.relogin": "Sign in again",
+  "chat.error.reloginProvider": "Re-configure {provider} API key",
+  "chat.error.action.relogin": "Configure again",
   "chat.error.action.refreshQuota": "Refresh quota",
   "chat.error.action.switchModel": "Switch model",
   "chat.error.action.retryLater": "Try again later",
@@ -5060,7 +5060,7 @@ const enUS: Record<string, string> = {
   "chat.error.collapseDetails": "Hide details",
   "chat.error.feedback": "Report issue",
   "chat.error.feedbackOpened": "Feedback opened with the error context attached",
-  "chat.error.noAvailableModel": "No model available. Upgrade or set a custom model.",
+  "chat.error.noAvailableModel": "No model available. Configure a custom model.",
   "chat.error.sendFailed": "Failed to send. Try again later.",
   "chat.error.modelSettings": "Model settings",
   "chat.error.setModels": "Set",
@@ -5073,23 +5073,23 @@ const enUS: Record<string, string> = {
   "chat.quota.startPlan.modelVeryLow":
     "{model} has {percent} of its plan quota remaining ({remaining} tokens).",
   "chat.quota.startPlan.modelExhausted":
-    "All available quota for {model} has been used up. Switch models or upgrade your plan.",
+    "All available quota for {model} has been used up. Switch to another model.",
   "chat.quota.startPlan.dailyExhausted":
-    "Your Start Plan quota has been used up. Upgrade your plan or wait for the quota to reset.",
+    "Your Start Plan quota has been used up. Wait for the quota to reset.",
   "chat.quota.startPlan.concurrentLimit":
-    "The system is busy. Please switch models, upgrade your account, or try again later.",
+    "The system is busy. Please switch models or try again later.",
   "chat.quota.startPlan.concurrentLimit.retryExhausted":
-    "The system is busy, and automatic retries have reached the maximum count. Please try again later or upgrade your account.",
+    "The system is busy, and automatic retries have reached the maximum count. Please try again later.",
   "chat.quota.startPlan.concurrentLimit.switchModel":
     "The current model request concurrency limit has been reached. Switch models to continue your current task.",
   "chat.quota.mcp.quotaExhausted":
     'ZCodium MCP "{server}" has used up today\'s quota. It resets tomorrow.',
   "chat.quota.mcp.codingPlanRequired":
-    'No ZCodium MCP "{server}" quota. Sign in or get a Coding Plan to use it.',
+    'No ZCodium MCP "{server}" quota. Configure an API key or a Coding Plan to use it.',
   "chat.quota.providerLimited":
-    "The current account quota or plan limit has been reached. Upgrade or adjust the plan to continue.",
-  "chat.quota.action.upgrade": "Upgrade",
-  "chat.quota.action.renew": "Renew",
+    "The current quota or plan limit has been reached. Adjust the plan to continue.",
+  "chat.quota.action.upgrade": "Configure",
+  "chat.quota.action.renew": "Refresh",
   "chat.quota.action.switchModel": "Switch model",
   "chat.quota.action.switchProvider": "Switch provider",
   "chat.quota.action.refresh": "Refresh quota",
@@ -5244,10 +5244,10 @@ const enUS: Record<string, string> = {
   "zcode.error.ZCODE_RUNTIME_MODEL_UNAVAILABLE":
     "The current model is no longer available. Select an available model from the current model list to continue.",
   "zcode.error.ZCODE_BIGMODEL_TEAM_PLAN_MEMBER_REQUIRED":
-    "The current model is unavailable. Check whether the current account has been added to the project member list.",
-  "zcode.error.providerBusiness.1006": "Your login session has expired. Please sign in again.",
+    "This model is unavailable. Check whether the API key has been added to the project member list.",
+  "zcode.error.providerBusiness.1006": "The API key has expired. Configure it again and retry.",
   "zcode.error.providerBusiness.1005":
-    "Today's free plan quota has been used up. Upgrade to continue now, or wait for the quota to reset.",
+    "Today's free plan quota is used up. Switch models or wait for the quota to reset.",
   "zcode.error.providerBusiness.3006":
     "The current model is not included in this plan. Switch to an allowed model and try again.",
   "zcode.error.providerBusiness.3002":
@@ -5573,8 +5573,8 @@ const enUS: Record<string, string> = {
   "feedback.submit.removeScreenshot": "Remove",
   "feedback.submit.contact.label": "Contact",
   "feedback.submit.contact.hint":
-    "Optional, for follow-up. You can also enter another social account.",
-  "feedback.submit.contact.placeholder": "example@domain.com / social account",
+    "Optional; other contact details are fine too.",
+  "feedback.submit.contact.placeholder": "example@domain.com / other contact",
   "feedback.submit.supplemental.title": "Additional information",
   "feedback.submit.module.label": "Module",
   "feedback.submit.severity.label": "Impact",

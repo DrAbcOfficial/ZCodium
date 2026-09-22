@@ -94,11 +94,10 @@ jobs:
 
           ### macOS（.dmg）
 
-          按机型下载 mac-arm64（Apple Silicon）或 mac-x64（Intel）的 .dmg，打开后把 ZCodium 拖进“应用程序”。没有 ZCode 官方签名，Gatekeeper 会拦截首次打开；**先把应用拖进「应用程序」，再执行**下面命令（提示输入密码时输入开机密码，输入过程屏幕上不显示任何字符）：
+          按机型下载 mac-arm64（Apple Silicon）或 mac-x64（Intel）的 .dmg，打开后把 ZCodium 拖进“应用程序”。没有 ZCode 官方签名，Gatekeeper 会拦截首次打开；**先把应用拖进「应用程序」，再执行**下面命令（提示输入密码时输入开机密码，输入过程屏幕上不显示任何字符；命令执行完会自动打开 ZCodium，并立即退出，不会一直占用终端）：
 
           ```bash
-          sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
-          open -a "ZCodium"
+          sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
           ```
 
           命令使用 /usr/bin/xattr 绝对路径，避免 PATH 中其他同名工具（例如 Python 的 xattr）干扰。也可以在“访达”里右键（Control-点击）应用 → 打开 → 弹窗里再点“打开”。
@@ -129,7 +128,7 @@ jobs:
 
           #### English
 
-          - **macOS**: download the mac-arm64 (Apple Silicon) or mac-x64 (Intel) DMG, open it and drag ZCodium into Applications. The app is not signed by ZCode, so **after dragging** run `sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"` — enter your login password when asked (nothing is shown while typing) — or right-click (Control-click) the app → Open → Open. The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name.
+          - **macOS**: download the mac-arm64 (Apple Silicon) or mac-x64 (Intel) DMG, open it and drag ZCodium into Applications. The app is not signed by ZCode, so **after dragging** run `sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"` — enter your login password when asked (nothing is shown while typing); the command launches the app and exits immediately — or right-click (Control-click) the app → Open → Open. The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name.
           - **Windows**: run the .exe installer. SmartScreen shows "Windows protected your PC" — click **More info** → **Run anyway**. This is the expected warning, not a corrupted file.
           - **Linux**: run `chmod +x ZCodium*linux*.AppImage && ./ZCodium*linux*.AppImage`.
           - **CLI**: Node.js 24 is required. Extract the tarball and run `./install.sh` (installs the `zcode` command into `~/.zcode/runtime`) or `node bin/zcode.mjs --help`.

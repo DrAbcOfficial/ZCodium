@@ -23,9 +23,8 @@
 2. 因为没有 ZCode 官方签名，Gatekeeper 会提示“无法验证开发者”或“已损坏”。**先把应用拖进「应用程序」，再执行**下面命令（提示输入密码时输入开机密码，输入过程屏幕上不显示任何字符）：
 
    ```bash
-   # 命令行放行一次：
-   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
-   open -a "ZCodium"
+   # 命令行放行并启动（命令会立即退出，不会占用终端）：
+   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
    ```
 
    命令使用 `/usr/bin/xattr` 绝对路径，避免 PATH 里其他同名工具（例如 Python 的 xattr）报 “option -r not recognized”。也可以右键（Control-点击）应用 → 选择“打开” → 弹窗里再点“打开”。之后就能正常双击启动了。
@@ -277,7 +276,7 @@ pnpm bundle:desktop -- --help
 安装：双击打开产物 DMG，将 ZCodium 拖入"应用程序"。本地构建未签名，首次打开若被 macOS 拦截，执行：
 
 ```bash
-sudo /usr/bin/xattr -rd com.apple.quarantine /Applications/ZCodium.app
+sudo /usr/bin/xattr -rd com.apple.quarantine /Applications/ZCodium.app && open -a "ZCodium"
 ```
 
 ### ZCode 命令行版

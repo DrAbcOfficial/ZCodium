@@ -23,9 +23,8 @@ The [Releases](https://github.com/ZCodium-project/ZCodium/releases) page ships d
 2. The app is not signed by ZCode, so Gatekeeper will say the developer cannot be verified (or that the app is damaged). **After dragging the app into Applications**, run the command below (enter your login password when asked; nothing is shown while typing):
 
    ```bash
-   # One-time command:
-   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
-   open -a "ZCodium"
+   # One-time command (unblocks and launches; it exits immediately):
+   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
    ```
 
    The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name (for example the Python xattr package), which fail with "option -r not recognized". Alternatively, right-click (Control-click) the app in Finder → Open → click Open again in the dialog. Afterwards it launches normally with a double-click.

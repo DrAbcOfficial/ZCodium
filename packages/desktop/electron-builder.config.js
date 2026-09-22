@@ -747,13 +747,13 @@ export default {
       // path 用绝对路径，避免 dmgbuild 依赖工作目录解析。
       {
         x: 170,
-        y: 370,
+        y: 365,
         type: "file",
         path: resolve(desktopPackageRoot, "build/dmg/解除拦截.txt"),
       },
       {
         x: 450,
-        y: 370,
+        y: 365,
         type: "file",
         path: resolve(desktopPackageRoot, "build/dmg/Unblock.txt"),
       },
