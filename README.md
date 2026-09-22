@@ -15,12 +15,12 @@
 
 The [Releases](https://github.com/ZCodium-project/ZCodium/releases) page ships desktop clients (macOS / Windows / Linux) and the CLI distribution.
 
-**About signing**: nothing is **code-signed** (and the macOS builds are not notarized either), so the operating system blocks the first launch. That is expected — allow it once per platform as below. You can verify the download against the `sha256.txt` on the release page before allowing it.
+**About signing**: the builds have no **official signature**, so the operating system blocks the first launch. That is expected — allow it once per platform as below. You can verify the download against the `sha256.txt` on the release page before allowing it.
 
 ### macOS (.dmg)
 
 1. Download `ZCodium-*-mac-arm64.dmg` (Apple Silicon) or `ZCodium-*-mac-x64.dmg` (Intel), open it and drag ZCodium into Applications.
-2. The app is unsigned and not notarized, so Gatekeeper will say the developer cannot be verified (or that the app is damaged). **After dragging the app into Applications**, run the command below (enter your login password when asked; nothing is shown while typing):
+2. The app has no official signature, so Gatekeeper will say the developer cannot be verified (or that the app is damaged). **After dragging the app into Applications**, run the command below (enter your login password when asked; nothing is shown while typing):
 
    ```bash
    # One-time command:
@@ -33,9 +33,9 @@ The [Releases](https://github.com/ZCodium-project/ZCodium/releases) page ships d
 ### Windows (.exe)
 
 1. Download `ZCodium-*-win-x64.exe` and double-click it.
-2. The installer is unsigned, so SmartScreen shows the "Windows protected your PC" warning. Click **More info** → **Run anyway** and finish the installer.
+2. The installer has no official signature, so SmartScreen shows the "Windows protected your PC" warning. Click **More info** → **Run anyway** and finish the installer.
 
-   This is the normal prompt for unsigned apps, not a sign of corruption; you can also verify the installer against the `sha256.txt` from the release page first.
+   This is the expected prompt, not a sign of corruption; you can also verify the installer against the `sha256.txt` from the release page first.
 
 ### Linux (.AppImage)
 

@@ -1,6 +1,6 @@
 ZCodium is blocked by macOS on first launch
 
-Reason: the installer is not code-signed or notarized by Apple, so Gatekeeper blocks the first launch.
+Reason: the installer has no official signature, so Gatekeeper blocks the first launch.
 
 Drag ZCodium into "Applications" first, then follow these steps:
 

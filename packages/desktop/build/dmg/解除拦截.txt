@@ -1,6 +1,6 @@
 ZCodium 首次打开被 macOS 拦截怎么办？
 
-原因：安装包没有使用 Apple 的代码签名和公证，macOS 的 Gatekeeper 会拦截首次打开。
+原因：安装包没有官方签名，macOS 的 Gatekeeper 会拦截首次打开。
 
 先把 ZCodium 拖进「应用程序」，然后按下面步骤解除拦截：
 
