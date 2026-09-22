@@ -588,6 +588,7 @@ const enUS: Record<string, string> = {
     "Built-in provider configuration for {provider} was not found. Please try again later.",
   "login.apiKey.saveError": "Failed to save API key: {error}",
   "login.apiKey.skipError": "Failed to skip API key setup: {error}",
+  "login.apiKey.moreProvidersHint": "Other model providers can be configured in Settings - Models",
   "login.skip": "Skip for now",
   "settings.onboarding": "Onboard",
   "settings.onboardingDescription":

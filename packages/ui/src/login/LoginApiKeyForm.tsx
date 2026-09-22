@@ -20,6 +20,7 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select.js";
@@ -193,6 +194,10 @@ export function LoginApiKeyForm({ onCancel, onSaved, onSkipped }: LoginApiKeyFor
                     id: "login.apiKey.provider.bigmodel",
                   })}
                 </SelectItem>
+                {/* 下拉里只列内置两家，提示其余供应商在设置里配置，避免用户以为只有这两个可选。 */}
+                <SelectLabel className="mx-1 mt-1 border-t border-border pt-2 text-ui-xs font-normal leading-4 whitespace-normal text-foreground-subtle">
+                  {intl.formatMessage({ id: "login.apiKey.moreProvidersHint" })}
+                </SelectLabel>
               </SelectContent>
             </Select>
           </div>

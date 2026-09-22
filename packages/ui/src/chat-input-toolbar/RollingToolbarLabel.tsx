@@ -63,8 +63,17 @@ export function RollingToolbarLabel({
 
   if (reducedMotion) {
     return (
-      <span className={className} title={label}>
-        {content}
+      // 减弱动态效果分支必须保留与动画分支相同的两层包裹结构：
+      // 调用方用 [&>span>span]:block/truncate 作用于内层包裹；少一层会让
+      // prefix/value 两个 span 各自变成 block，模型名被拆成两行。
+      <span
+        className={cn(
+          "relative inline-flex h-[1.3em] min-w-0 items-center overflow-hidden leading-[1.25]",
+          className,
+        )}
+        title={label}
+      >
+        <span className="inline-flex min-w-0 whitespace-nowrap leading-[1.25]">{content}</span>
       </span>
     );
   }

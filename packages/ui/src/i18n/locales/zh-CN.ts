@@ -536,6 +536,7 @@ const zhCN: Record<string, string> = {
   "login.apiKey.providerMissingError": "未找到 {provider} 的内置 provider 配置，请稍后重试。",
   "login.apiKey.saveError": "保存 API key 失败：{error}",
   "login.apiKey.skipError": "跳过 API key 设置失败：{error}",
+  "login.apiKey.moreProvidersHint": "其他模型供应商可在「设置 - 模型」中配置",
   "login.skip": "暂时跳过",
   "settings.onboarding": "引导",
   "settings.onboardingDescription":
