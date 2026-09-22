@@ -11,49 +11,6 @@
 
 > This repository is forked from [zai-org/ZCode](https://github.com/zai-org/ZCode), open-sourced by Zhipu on September 21, 2026. The name follows the same pattern as Chrome → Chromium and VS Code → VSCodium: **ZCode → ZCodium**. Everything here is backed by code and reproducible checks.
 
-## Download and install
-
-The [Releases](https://github.com/ZCodium-project/ZCodium/releases) page ships desktop clients (macOS / Windows / Linux) and the CLI distribution.
-
-**About signing**: the builds are **not signed by ZCode**, so the operating system blocks the first launch. That is expected — allow it once per platform as below. You can verify the download against the `sha256.txt` on the release page before allowing it.
-
-### macOS (.dmg)
-
-1. Download `ZCodium-*-mac-arm64.dmg` (Apple Silicon) or `ZCodium-*-mac-x64.dmg` (Intel), open it and drag ZCodium into Applications.
-2. The app is not signed by ZCode, so Gatekeeper will say the developer cannot be verified (or that the app is damaged). **After dragging the app into Applications**, run the command below (enter your login password when asked; nothing is shown while typing):
-
-   ```bash
-   # One-time command (unblocks and launches; it exits immediately):
-   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
-   ```
-
-   The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name (for example the Python xattr package), which fail with "option -r not recognized". Alternatively, right-click (Control-click) the app in Finder → Open → click Open again in the dialog. Afterwards it launches normally with a double-click.
-
-### Windows (.exe)
-
-1. Download `ZCodium-*-win-x64.exe` and double-click it.
-2. The installer is not signed by ZCode, so SmartScreen shows the "Windows protected your PC" warning. Click **More info** → **Run anyway** and finish the installer.
-
-   This is the expected prompt, not a sign of corruption; you can also verify the installer against the `sha256.txt` from the release page first.
-
-### Linux (.AppImage)
-
-```bash
-chmod +x ZCodium-*-linux-x86_64.AppImage
-./ZCodium-*-linux-x86_64.AppImage
-```
-
-### CLI distribution (.tar.gz)
-
-The CLI distribution is a self-contained bundle (TUI + Web + Agent) and needs Node.js 24; the install script and runtime code can both be reviewed in this repository:
-
-```bash
-tar -xzf zcodium-*.tar.gz
-cd zcodium
-./install.sh        # installs the zcode command (defaults to ~/.zcode/runtime, entry in ~/.local/bin)
-zcode --help        # or run directly: node bin/zcode.mjs --help
-```
-
 ## How it compares with upstream
 
 | Item                     | ZCodium (this repo)                                                                  | Official client (closed source)                                           | Official open source             |
@@ -115,10 +72,53 @@ Compared with the upstream open-source release, this repository contains **no mo
 
 **Verification**: the change passes `pnpm typecheck`, `pnpm lint` (0 errors), and per-module regression tests. Full lists and verification limits are in the removal reports: [desktop](packages/desktop/specs/telemetry-removal-report.md), [CLI](apps/zcode-cli/specs/telemetry-removal-report.md), [UI](packages/ui/specs/telemetry-removal-report.md).
 
+## Download and install
+
+The [Releases](https://github.com/ZCodium-project/ZCodium/releases) page ships desktop clients (macOS / Windows / Linux) and the CLI distribution.
+
+**About signing**: the builds are **not signed by ZCode**, so the operating system blocks the first launch. That is expected — allow it once per platform as below. You can verify the download against the `sha256.txt` on the release page before allowing it.
+
+### macOS (.dmg)
+
+1. Download `ZCodium-*-mac-arm64.dmg` (Apple Silicon) or `ZCodium-*-mac-x64.dmg` (Intel), open it and drag ZCodium into Applications.
+2. The app is not signed by ZCode, so Gatekeeper will say the developer cannot be verified (or that the app is damaged). **After dragging the app into Applications**, run the command below (enter your login password when asked; nothing is shown while typing):
+
+   ```bash
+   # One-time command (unblocks and launches; it exits immediately):
+   sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
+   ```
+
+   The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name (for example the Python xattr package), which fail with "option -r not recognized". Alternatively, right-click (Control-click) the app in Finder → Open → click Open again in the dialog. Afterwards it launches normally with a double-click.
+
+### Windows (.exe)
+
+1. Download `ZCodium-*-win-x64.exe` and double-click it.
+2. The installer is not signed by ZCode, so SmartScreen shows the "Windows protected your PC" warning. Click **More info** → **Run anyway** and finish the installer.
+
+   This is the expected prompt, not a sign of corruption; you can also verify the installer against the `sha256.txt` from the release page first.
+
+### Linux (.AppImage)
+
+```bash
+chmod +x ZCodium-*-linux-x86_64.AppImage
+./ZCodium-*-linux-x86_64.AppImage
+```
+
+### CLI distribution (.tar.gz)
+
+The CLI distribution is a self-contained bundle (TUI + Web + Agent) and needs Node.js 24; the install script and runtime code can both be reviewed in this repository:
+
+```bash
+tar -xzf zcodium-*.tar.gz
+cd zcodium
+./install.sh        # installs the zcode command (defaults to ~/.zcode/runtime, entry in ~/.local/bin)
+zcode --help        # or run directly: node bin/zcode.mjs --help
+```
+
 ## Build and Release
 
 - **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/ZCodium-project/ZCodium/releases), and the project site is built in [its own repository](https://github.com/ZCodium-project/zcodium-project.github.io) and served at https://zcodium-project.github.io/. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
-- **Release flow**: run the [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow manually in Actions. Enter `3.14.0` to get `3.14.0-audit.<date>` automatically (repeat builds on the same day get `.2`, `.3`, …), or pass the full form `3.14.0-audit.20260922[.2]`; the workflow creates the tag, publishes the release (with bilingual install instructions), and builds/uploads the CLI and desktop artifacts. Stable releases (pre-release unchecked) additionally get a changelog since the previous stable release; pre-releases ship without one.
+- **Release flow**: run the [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow manually in Actions. Enter `3.14.0` with pre-release checked to get `3.14.0-audit.<date>` (repeat builds on the same day get `.2`, `.3`, …; the full form `3.14.0-audit.20260922[.2]` is also accepted). With pre-release unchecked it publishes the stable `v3.14.0` (clean tag, GitHub Latest, so `/releases/latest` works). Release notes always lead with "what changed vs ZCode", then the install steps — the English block first, an exact Chinese mirror below — and the downloads list last.
 - **Upstream sync**: review the change first, diff-audit it per version, and merge only the risk-free parts; conclusions go into the audit record.
 
 ## Disclaimer
