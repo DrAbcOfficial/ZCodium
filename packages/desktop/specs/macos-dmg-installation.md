@@ -3,7 +3,7 @@
 ## 规则与边界
 
 - `electron-builder.config.js` 的 `dmg` 节点是 DMG 窗口布局、背景和卷内文件的唯一所有者；`build/dmg_background.png`（620x560）与 `build/dmg_background@2x.png`（1240x1120）是背景事实源，窗口尺寸由 1x 背景图决定。Finder 窗口外框比图标视图可见区高约 70px（工具栏），所有元素必须排在顶部可见区内。
-- 安装包没有官方签名，首次打开必被 Gatekeeper 拦截；面向用户的所有文案统一用"没有官方签名"，不展开 Apple 公证/代码签名等平台细节。DMG 必须同时提供背景说明和可复制的纯文本说明文件：`build/dmg/解除拦截.txt`（中文名）与 `build/dmg/Unblock.txt`（英文名，不带语言后缀），内容包含 `sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"`、先拖拽后执行的时机说明、密码不回显提示与替代打开方式。
+- 安装包没有 ZCode 官方签名，首次打开必被 Gatekeeper 拦截；面向用户的所有文案统一用"没有 ZCode 官方签名"，不展开 Apple 公证/代码签名等平台细节。DMG 必须同时提供背景说明和可复制的纯文本说明文件：`build/dmg/解除拦截.txt`（中文名）与 `build/dmg/Unblock.txt`（英文名，不带语言后缀），内容包含 `sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"`、先拖拽后执行的时机说明、密码不回显提示与替代打开方式。
 - 解除命令一律使用 `/usr/bin/xattr` 绝对路径：用户 PATH 中可能存在同名工具（如 Python 的 xattr 包），裸 `xattr` 会报 `option -r not recognized`。
 - 背景上的两个箭头分别指向两个说明文件的落点（contents 坐标 x=170 / x=450，y=370）；app 图标在 (150, 120)，Applications 链接在 (470, 120)，中间箭头表示拖拽方向。布局最低内容（说明文件标签）不超过可见区下沿，保证 Finder 打开时不出现滚动裁切。
 - 说明文件通过绝对路径写入 `dmg.contents`，不依赖 dmgbuild 的工作目录；不隐藏扩展名。

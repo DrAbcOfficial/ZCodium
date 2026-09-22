@@ -86,15 +86,15 @@ jobs:
           cat > /tmp/release-notes.md <<'NOTES'
           ## 安装说明 / Installation
 
-          > 安装包没有官方签名，首次打开会被系统安全机制拦截。
+          > 安装包没有 ZCode 官方签名，首次打开会被系统安全机制拦截。
           > 这是预期行为，按下面各平台的方式放行一次即可；下载前可以先按本页 sha256.txt 校验文件。
           >
-          > The builds have no official signature. Your system will block the first launch;
+          > The builds are not signed by ZCode. Your system will block the first launch;
           > follow the per-platform steps below once. Verify downloads against sha256.txt first.
 
           ### macOS（.dmg）
 
-          按机型下载 mac-arm64（Apple Silicon）或 mac-x64（Intel）的 .dmg，打开后把 ZCodium 拖进“应用程序”。没有官方签名，Gatekeeper 会拦截首次打开；**先把应用拖进「应用程序」，再执行**下面命令（提示输入密码时输入开机密码，输入过程屏幕上不显示任何字符）：
+          按机型下载 mac-arm64（Apple Silicon）或 mac-x64（Intel）的 .dmg，打开后把 ZCodium 拖进“应用程序”。没有 ZCode 官方签名，Gatekeeper 会拦截首次打开；**先把应用拖进「应用程序」，再执行**下面命令（提示输入密码时输入开机密码，输入过程屏幕上不显示任何字符）：
 
           ```bash
           sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"
@@ -105,7 +105,7 @@ jobs:
 
           ### Windows（.exe）
 
-          双击安装。安装包没有官方签名，SmartScreen 会弹出“Windows 已保护你的电脑”的警告：
+          双击安装。安装包没有 ZCode 官方签名，SmartScreen 会弹出“Windows 已保护你的电脑”的警告：
           点“**更多信息**” → “**仍要运行**”即可——这是预期提示，不是文件损坏。
 
           ### Linux（.AppImage）
@@ -125,11 +125,11 @@ jobs:
           node bin/zcode.mjs --help
           ```
 
-          CLI 发行包需要 Node.js 24。桌面安装包由 CI 构建，没有官方签名。
+          CLI 发行包需要 Node.js 24。桌面安装包由 CI 构建，没有 ZCode 官方签名。
 
           #### English
 
-          - **macOS**: download the mac-arm64 (Apple Silicon) or mac-x64 (Intel) DMG, open it and drag ZCodium into Applications. The app has no official signature, so **after dragging** run `sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"` — enter your login password when asked (nothing is shown while typing) — or right-click (Control-click) the app → Open → Open. The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name.
+          - **macOS**: download the mac-arm64 (Apple Silicon) or mac-x64 (Intel) DMG, open it and drag ZCodium into Applications. The app is not signed by ZCode, so **after dragging** run `sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app"` — enter your login password when asked (nothing is shown while typing) — or right-click (Control-click) the app → Open → Open. The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name.
           - **Windows**: run the .exe installer. SmartScreen shows "Windows protected your PC" — click **More info** → **Run anyway**. This is the expected warning, not a corrupted file.
           - **Linux**: run `chmod +x ZCodium*linux*.AppImage && ./ZCodium*linux*.AppImage`.
           - **CLI**: Node.js 24 is required. Extract the tarball and run `./install.sh` (installs the `zcode` command into `~/.zcode/runtime`) or `node bin/zcode.mjs --help`.
