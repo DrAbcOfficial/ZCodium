@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "版本号（不含 v 前缀，例如 3.14.0-audit.1）"
+        description: "版本号：填 3.14.0 会自动生成 3.14.0-audit.<当天日期>（同一天重复构建自动加 .2/.3）；也可直接填完整形式 3.14.0-audit.20260922[.2]"
         required: true
         type: string
       prerelease:
@@ -42,13 +42,28 @@ jobs:
           VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          if ! printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$'; then
-            echo "::error::Invalid version \"$VERSION\". Expected semver like 3.14.0 or 3.14.0-audit.1"
-            exit 1
-          fi
-          TAG="v$VERSION"
-          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
-            echo "::error::Tag $TAG already exists"
+          # 版本采用日期式命名（tag 名即时间序，避免 audit 序号在 GitHub 列表/排序里错位）：
+          #   输入 3.14.0            -> 3.14.0-audit.<YYYYMMDD>，同一天重复构建自动追加 .2/.3/...
+          #   输入完整日期形式        -> 严格按给定版本使用，不自动递增
+          DATE="$(date -u +%Y%m%d)"
+          if printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            BASE="$VERSION-audit.$DATE"
+            TAG="v$BASE"
+            if git ls-remote --tags origin "refs/tags/$TAG" | grep -q .; then
+              SEQ=2
+              while git ls-remote --tags origin "refs/tags/v$BASE.$SEQ" | grep -q .; do
+                SEQ=$((SEQ + 1))
+              done
+              TAG="v$BASE.$SEQ"
+            fi
+          elif printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+-audit\.[0-9]{8}(\.[0-9]+)?$'; then
+            TAG="v$VERSION"
+            if git ls-remote --tags origin "refs/tags/$TAG" | grep -q .; then
+              echo "::error::Tag $TAG already exists; pass the base version (e.g. 3.14.0) to auto-sequence, or pick another date/suffix"
+              exit 1
+            fi
+          else
+            echo "::error::Invalid version \"$VERSION\". Use 3.14.0 (date and same-day sequence are appended automatically) or the full form 3.14.0-audit.20260922[.2]"
             exit 1
           fi
           if gh release view "$TAG" >/dev/null 2>&1; then
@@ -69,9 +84,14 @@ jobs:
           git tag "$TAG"
           git push origin "$TAG"
           cat > /tmp/release-notes.md <<'NOTES'
-          ## 安装
+          ## 安装说明 / Installation
 
-          > 所有安装包都没有做代码签名（macOS 版也没有做 Apple 公证），首次打开会被系统安全机制拦截。这是预期行为，按下面各平台的方式放行一次即可；放行前可以先按本页 sha256.txt 校验下载文件。
+          > macOS 版没有做 Apple 公证，Windows 版没有做代码签名，首次打开会被系统安全机制拦截。
+          > 这是预期行为，按下面各平台的方式放行一次即可；下载前可以先按本页 sha256.txt 校验文件。
+          >
+          > The macOS build is not notarized and the Windows build is not code-signed. Your system
+          > will block the first launch; follow the per-platform steps below once. Verify downloads
+          > against sha256.txt first.
 
           ### macOS（.dmg）
 
@@ -97,22 +117,54 @@ jobs:
           ./ZCodium*linux*.AppImage
           ```
 
-          ### CLI 发行包（.tar.gz）
+          ### CLI 发行包 / CLI package（.tar.gz）
 
           ```bash
           tar -xzf zcodium-*.tar.gz
           cd zcodium
           ./install.sh        # 安装 zcode 命令（默认到 ~/.zcode/runtime）
-          # 或直接运行：
+          # 或直接运行 / or run directly:
           node bin/zcode.mjs --help
           ```
 
           CLI 发行包需要 Node.js 24。桌面安装包由 CI 构建，未签名、未公证。
 
-          ## 关于这个版本
+          #### English
+
+          - **macOS**: download the mac-arm64 (Apple Silicon) or mac-x64 (Intel) DMG, open it and drag ZCodium into Applications. The app is not signed or notarized, so either run the commands above once or right-click (Control-click) the app → Open → Open.
+          - **Windows**: run the .exe installer. SmartScreen shows "Windows protected your PC" — click **More info** → **Run anyway**. This is the normal warning for unsigned apps, not a corrupted file.
+          - **Linux**: run `chmod +x ZCodium*linux*.AppImage && ./ZCodium*linux*.AppImage`.
+          - **CLI**: Node.js 24 is required. Extract the tarball and run `./install.sh` (installs the `zcode` command into `~/.zcode/runtime`) or `node bin/zcode.mjs --help`.
+
+          ## 关于这个版本 / About this release
 
           基于上游开源代码的审计版本：监控与遥测已全部移除，上游改动逐提交审阅。改动细节见仓库 README。
+
+          Audited build based on the upstream open-source code: telemetry removed, upstream changes reviewed commit by commit. See the repository README for details.
           NOTES
+          # 仅正式版追加更新日志；预发布版本不带 changelog。
+          if [ "$PRERELEASE" != "true" ]; then
+            PREV_STABLE="$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-pre-releases --exclude-drafts --limit 1 --json tagName --jq '.[0].tagName // empty')"
+            {
+              echo
+              echo "## 更新日志 / Changelog"
+              echo
+              if [ -n "$PREV_STABLE" ]; then
+                echo "自上一个正式版 \`$PREV_STABLE\` 以来的变更 / Changes since \`$PREV_STABLE\`:"
+                CHANGELOG_RANGE="$PREV_STABLE..$TAG"
+              else
+                echo "首个正式版，包含以下变更 / First stable release, includes the following changes:"
+                CHANGELOG_RANGE="$(git rev-list --max-parents=0 HEAD)..$TAG"
+              fi
+              echo
+              CHANGES="$(git log --no-merges --pretty='- %s (`%h`)' "$CHANGELOG_RANGE")"
+              if [ -n "$CHANGES" ]; then
+                printf '%s\n' "$CHANGES"
+              else
+                echo "- 无代码变更 / No code changes."
+              fi
+            } >> /tmp/release-notes.md
+          fi
           args=(--title "$TAG" --notes-file /tmp/release-notes.md)
           if [ "$PRERELEASE" = "true" ]; then
             args+=(--prerelease)

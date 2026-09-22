@@ -119,7 +119,7 @@ zcode --help        # 或直接运行：node bin/zcode.mjs --help
 ## 构建与发布
 
 - **GitHub 构建**：审计后的代码在本仓库通过 GitHub Actions 构建，CLI 发行包随版本发布到 [Releases](https://github.com/ZCodium-project/ZCodium/releases)，站点由独立仓库构建，部署在 https://zcodium-project.github.io/。所有产物都来自本仓库经过审计的源码，不包含上游未同步的改动。
-- **发版流程**：在 Actions 中手动运行 [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow，填写版本号（例如 `3.14.0-audit.1`），即可创建 tag、发布 Release 并构建上传 CLI 发行包；勾选预发布可标记为 Pre-release。
+- **发版流程**：在 Actions 中手动运行 [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow，版本号填 `3.14.0` 即可自动生成 `3.14.0-audit.<当天日期>`（同一天重复构建自动追加 `.2`、`.3`），也可直接填完整形式 `3.14.0-audit.20260922[.2]`；workflow 会创建 tag、发布 Release（含中英文安装说明），并构建上传 CLI 与桌面端产物。正式版（不勾选预发布）会额外附加自上一个正式版以来的更新日志；预发布版本不带更新日志。
 - **上游同步**：先审阅改动，再逐版本 diff 审计，只合入无风险部分；结论写在审计记录里。
 
 ## 免责声明

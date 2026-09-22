@@ -119,7 +119,7 @@ Compared with the upstream open-source release, this repository contains **no mo
 ## Build and Release
 
 - **GitHub builds**: audited code is built in this repository with GitHub Actions. CLI distributions are published to [Releases](https://github.com/ZCodium-project/ZCodium/releases), and the project site is built in [its own repository](https://github.com/ZCodium-project/zcodium-project.github.io) and served at https://zcodium-project.github.io/. Every artifact comes from the audited source in this repository and contains no unsynced upstream changes.
-- **Release flow**: run the [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow manually in Actions, enter a version (for example `3.14.0-audit.1`) to create the tag, publish the release, and build and upload the CLI distribution; check pre-release to mark it as a Pre-release.
+- **Release flow**: run the [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow manually in Actions. Enter `3.14.0` to get `3.14.0-audit.<date>` automatically (repeat builds on the same day get `.2`, `.3`, …), or pass the full form `3.14.0-audit.20260922[.2]`; the workflow creates the tag, publishes the release (with bilingual install instructions), and builds/uploads the CLI and desktop artifacts. Stable releases (pre-release unchecked) additionally get a changelog since the previous stable release; pre-releases ship without one.
 - **Upstream sync**: review the change first, diff-audit it per version, and merge only the risk-free parts; conclusions go into the audit record.
 
 ## Disclaimer
