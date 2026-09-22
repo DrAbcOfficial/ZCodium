@@ -730,7 +730,7 @@ export default {
     // 丢失 Electron Framework 主二进制，安装后启动直接报 DYLD Library missing。
     // 显式放大 DMG 容量，避免拷贝截断导致的“Framework 目录存在但核心文件缺失”。
     size: "3200m",
-    // 使用自定义安装背景图。
+    // 使用自定义安装背景图（620x460 窗口，背景上标注 ZCodium 与解除 Gatekeeper 拦截的命令）。
     background: "build/dmg_background.png",
     // 安装盘图标统一使用安装专用素材，避免复用应用图标导致安装识别度不足。
     icon: "build/icon_installer.icns",
@@ -738,8 +738,22 @@ export default {
       // 实验性调整：为隐藏资源文件显式指定图标坐标，尽量把它们移到角落区域。
       { x: 640, y: 56, type: "file", path: ".background.tiff" },
       { x: 640, y: 56, type: "file", path: ".VolumeIcon.icns" },
-      { x: 130, y: 220 },
-      { x: 410, y: 220, type: "link", path: "/Applications" },
+      { x: 150, y: 220 },
+      { x: 470, y: 220, type: "link", path: "/Applications" },
+      // 未签名安装包在首次打开时会被 Gatekeeper 拦截；背景在对应位置画了箭头，
+      // 指向这两个可复制解除命令的纯文本文件。path 用绝对路径，避免 dmgbuild 依赖工作目录解析。
+      {
+        x: 170,
+        y: 400,
+        type: "file",
+        path: resolve(desktopPackageRoot, "build/dmg/解除拦截-中文.txt"),
+      },
+      {
+        x: 450,
+        y: 400,
+        type: "file",
+        path: resolve(desktopPackageRoot, "build/dmg/解除拦截-英文.txt"),
+      },
     ],
   },
   nsis: {
