@@ -97,29 +97,7 @@ jobs:
           cat > /tmp/release-notes.md <<'NOTES'
           # ZCodium <VERSION>
 
-          > The builds are not signed by ZCode. Your system will block the first launch; allow it once per platform as below. Verify downloads against `sha256.txt` first.
-
           ## English
-
-          ### Install
-
-          - **macOS (.dmg)**: download `ZCodium-<VERSION>-mac-arm64.dmg` (Apple Silicon) or `ZCodium-<VERSION>-mac-x64.dmg` (Intel), open it, drag ZCodium into Applications. Because the app is not signed by ZCode, Gatekeeper blocks the first launch. After dragging, run the command below (password input is hidden; the command launches the app and exits immediately):
-
-            ```bash
-            sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
-            ```
-
-            The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name. You can also right-click (Control-click) the app in Finder -> Open -> Open.
-          - **Windows (.exe)**: run `ZCodium-<VERSION>-win-x64.exe`. Because it is not signed by ZCode, SmartScreen shows "Windows protected your PC" - click **More info** -> **Run anyway**. This is expected, not a corrupted file.
-          - **Linux (.AppImage)**: `chmod +x ZCodium-<VERSION>-linux-x86_64.AppImage && ./ZCodium-<VERSION>-linux-x86_64.AppImage`.
-          - **CLI (.tar.gz)**: requires Node.js 24. Extract and run:
-
-            ```bash
-            tar -xzf zcodium-<VERSION>.tar.gz
-            cd zcodium
-            ./install.sh        # installs the zcode command into ~/.zcode/runtime
-            zcode --help        # or run: node bin/zcode.mjs --help
-            ```
 
           ### What changed vs ZCode
 
@@ -130,29 +108,29 @@ jobs:
           - **No repository upload behavior**: snapshot packaging and upload logic removed, with guards against reintroduction.
           - **Open source and reviewable**: first-party code MIT, upstream Apache-2.0; removal reports for desktop, CLI and UI ship in the repository.
           - **Transparent builds**: installers are built by GitHub Actions from this repository, and in-app updates point to this repository's GitHub Releases.
-          - **Honest limitations**: Computer Use is an unavailable placeholder; installers are unsigned (see Install above).
+          - **Honest limitations**: Computer Use is an unavailable placeholder; installers are not signed by ZCode.
 
-          ## 中文
+          ### Install
 
-          ### 安装说明
-
-          - **macOS（.dmg）**：按机型下载 `ZCodium-<VERSION>-mac-arm64.dmg`（Apple Silicon）或 `ZCodium-<VERSION>-mac-x64.dmg`（Intel），打开后把 ZCodium 拖进“应用程序”。没有 ZCode 官方签名，Gatekeeper 会拦截首次打开。拖入后执行下面命令（输入密码时不显示字符；命令会自动启动应用并立即退出）：
+          - **macOS (.dmg)**: download `ZCodium-<VERSION>-mac-arm64.dmg` (Apple Silicon) or `ZCodium-<VERSION>-mac-x64.dmg` (Intel), open it, drag ZCodium into Applications. The app is not signed by ZCode, so Gatekeeper blocks the first launch - this system block is macOS only. Allow it once with the command below (enter your login password when asked; nothing is shown while typing; the command launches the app and exits immediately):
 
             ```bash
             sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
             ```
 
-            使用 `/usr/bin/xattr` 绝对路径，避免 PATH 中同名工具干扰。也可以在“访达”里右键（Control-点击）应用 -> 打开 -> 弹窗里再点“打开”。
-          - **Windows（.exe）**：运行 `ZCodium-<VERSION>-win-x64.exe`。没有 ZCode 官方签名，SmartScreen 会弹出“Windows 已保护你的电脑”——点“**更多信息**” -> “**仍要运行**”。这是预期提示，不是文件损坏。
-          - **Linux（.AppImage）**：`chmod +x ZCodium-<VERSION>-linux-x86_64.AppImage && ./ZCodium-<VERSION>-linux-x86_64.AppImage`。
-          - **CLI（.tar.gz）**：需要 Node.js 24。解压后运行：
+            The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name. You can also right-click (Control-click) the app in Finder -> Open -> Open.
+          - **Windows (.exe)**: run `ZCodium-<VERSION>-win-x64.exe`. The installer is not signed by ZCode, so SmartScreen shows a warning - a warning, not a system block; click **More info** -> **Run anyway**. This is expected, not a corrupted file.
+          - **Linux (.AppImage)**: `chmod +x ZCodium-<VERSION>-linux-x86_64.AppImage && ./ZCodium-<VERSION>-linux-x86_64.AppImage`.
+          - **CLI (.tar.gz)**: requires Node.js 24. Extract and run:
 
             ```bash
             tar -xzf zcodium-<VERSION>.tar.gz
             cd zcodium
-            ./install.sh        # 安装 zcode 命令到 ~/.zcode/runtime
-            zcode --help        # 或直接运行：node bin/zcode.mjs --help
+            ./install.sh        # installs the zcode command into ~/.zcode/runtime
+            zcode --help        # or run: node bin/zcode.mjs --help
             ```
+
+          ## 中文
 
           ### 相对 ZCode 的改动
 
@@ -163,7 +141,27 @@ jobs:
           - **移除仓库上传行为**：快照打包与上传逻辑已删除，并加了防回归保护。
           - **开源可复核**：第一方代码 MIT，上游代码 Apache-2.0；桌面端、CLI、UI 的移除报告随仓库发布。
           - **构建透明**：安装包由 GitHub Actions 从本仓库构建；应用内更新指向本仓库的 GitHub Releases。
-          - **如实说明限制**：Computer Use 为不可用占位；安装包未签名（见上方安装说明）。
+          - **如实说明限制**：Computer Use 为不可用占位；安装包没有 ZCode 官方签名。
+
+          ### 安装说明
+
+          - **macOS（.dmg）**：按机型下载 `ZCodium-<VERSION>-mac-arm64.dmg`（Apple Silicon）或 `ZCodium-<VERSION>-mac-x64.dmg`（Intel），打开后把 ZCodium 拖进“应用程序”。没有 ZCode 官方签名，Gatekeeper 会拦截首次打开——这是 macOS 独有的系统拦截。用下面命令放行一次（输入密码时不显示字符；命令会自动启动应用并立即退出）：
+
+            ```bash
+            sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
+            ```
+
+            使用 `/usr/bin/xattr` 绝对路径，避免 PATH 中同名工具干扰。也可以在“访达”里右键（Control-点击）应用 -> 打开 -> 弹窗里再点“打开”。
+          - **Windows（.exe）**：运行 `ZCodium-<VERSION>-win-x64.exe`。没有 ZCode 官方签名，SmartScreen 会显示警告——只是警告，不是系统拦截；点“**更多信息**” -> “**仍要运行**”。这是预期提示，不是文件损坏。
+          - **Linux（.AppImage）**：`chmod +x ZCodium-<VERSION>-linux-x86_64.AppImage && ./ZCodium-<VERSION>-linux-x86_64.AppImage`。
+          - **CLI（.tar.gz）**：需要 Node.js 24。解压后运行：
+
+            ```bash
+            tar -xzf zcodium-<VERSION>.tar.gz
+            cd zcodium
+            ./install.sh        # 安装 zcode 命令到 ~/.zcode/runtime
+            zcode --help        # 或直接运行：node bin/zcode.mjs --help
+            ```
 
           ## Downloads / 产物
 
@@ -172,7 +170,7 @@ jobs:
           - Windows x64: `ZCodium-<VERSION>-win-x64.exe`
           - Linux x64: `ZCodium-<VERSION>-linux-x86_64.AppImage`
           - CLI: `zcodium-<VERSION>.tar.gz`
-          - Checksums: `sha256.txt`
+          - Checksums: `sha256.txt`（下载后可用它校验 / verify downloads with it）
           - Update metadata: `latest*.yml`, `latest.json`
           NOTES
           sed -i "s/<VERSION>/${TAG#v}/g" /tmp/release-notes.md
