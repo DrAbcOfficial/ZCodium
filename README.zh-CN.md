@@ -121,6 +121,15 @@ zcode --help        # 或直接运行：node bin/zcode.mjs --help
 - **发版流程**：在 Actions 中手动运行 [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow，版本号填 `3.14.0`：勾选“预发布”生成 `3.14.0-audit.<当天日期>`（同一天重复构建自动追加 `.2`、`.3`，也可直接填完整形式 `3.14.0-audit.20260922[.2]`）；不勾选则发布正式版 `v3.14.0`（干净版本号，成为 GitHub Latest）。Release 说明固定为“相对 ZCode 的改动”在前、安装说明在后，英文在上、中文在下（内容严格对应），末尾列出产物。
 - **上游同步**：先审阅改动，再逐版本 diff 审计，只合入无风险部分；结论写在审计记录里。
 
+## 社区
+
+欢迎加入社区交流、反馈问题：
+
+| Discord | QQ 群 |
+| --- | --- |
+| <img src="docs/community/discord-qr.png" alt="Discord 邀请二维码" width="220" /> | <img src="docs/community/qq-group-qr.jpg" alt="QQ 群二维码" width="220" /> |
+| https://discord.gg/HeDkhY9nV | 群号：344502652 |
+
 ## 免责声明
 
 本仓库为开源社区驱动，与任何现有商业公司无关。文中事实均来自公开报道与独立代码审计，并已注明出处。如相关方认为内容有误，欢迎通过 Issue 提交更正。

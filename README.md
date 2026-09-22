@@ -121,6 +121,15 @@ zcode --help        # or run directly: node bin/zcode.mjs --help
 - **Release flow**: run the [Release](https://github.com/ZCodium-project/ZCodium/actions/workflows/release.yml) workflow manually in Actions. Enter `3.14.0` with pre-release checked to get `3.14.0-audit.<date>` (repeat builds on the same day get `.2`, `.3`, …; the full form `3.14.0-audit.20260922[.2]` is also accepted). With pre-release unchecked it publishes the stable `v3.14.0` (clean tag, GitHub Latest, so `/releases/latest` works). Release notes always lead with "what changed vs ZCode", then the install steps — the English block first, an exact Chinese mirror below — and the downloads list last.
 - **Upstream sync**: review the change first, diff-audit it per version, and merge only the risk-free parts; conclusions go into the audit record.
 
+## Community
+
+Join the community for discussions and feedback:
+
+| Discord | QQ group |
+| --- | --- |
+| <img src="docs/community/discord-qr.png" alt="Discord invite QR code" width="220" /> | <img src="docs/community/qq-group-qr.jpg" alt="QQ group QR code" width="220" /> |
+| https://discord.gg/HeDkhY9nV | Group ID: 344502652 |
+
 ## Disclaimer
 
 This repository is community-driven open source and is not affiliated with any existing commercial company. All facts come from public reporting and independent code audits, with sources cited. If any party believes something is inaccurate, please open an issue.
