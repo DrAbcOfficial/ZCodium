@@ -60,13 +60,27 @@ function ZCodeStartupLogo({
           values="1;0.4;1"
         />
       ) : null}
+      {/* 品牌 Z 使用图标同款对角渐变，避免在深色启动底上呈现为纯白。 */}
+      <defs>
+        <linearGradient
+          id="zcode-brand-z-gradient"
+          x1="712"
+          y1="224"
+          x2="300"
+          y2="800"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stopColor="#38bdf8" />
+          <stop offset="1" stopColor="#818cf8" />
+        </linearGradient>
+      </defs>
       <path
-        fill="currentColor"
+        fill="url(#zcode-brand-z-gradient)"
         d="M184 224H512L453 308Q439 328 415 328H184Z"
       />
-      <path fill="currentColor" d="M584 224H832L424 800H176Z" />
+      <path fill="url(#zcode-brand-z-gradient)" d="M584 224H832L424 800H176Z" />
       <path
-        fill="currentColor"
+        fill="url(#zcode-brand-z-gradient)"
         d="M536 720L600 656L648 704L824 528L888 592L648 832Z"
       />
     </svg>

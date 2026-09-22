@@ -228,9 +228,22 @@ function ZCodeEmptyStateLogo({ className }: { className?: string }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M184 224H512L453 308Q439 328 415 328H184Z" fill="currentColor" />
-        <path d="M584 224H832L424 800H176Z" fill="currentColor" />
-        <path d="M536 720L600 656L648 704L824 528L888 592L648 832Z" fill="currentColor" />
+        <defs>
+          <linearGradient
+            id="zcode-brand-z-gradient"
+            x1="712"
+            y1="224"
+            x2="300"
+            y2="800"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stopColor="#38bdf8" />
+            <stop offset="1" stopColor="#818cf8" />
+          </linearGradient>
+        </defs>
+        <path d="M184 224H512L453 308Q439 328 415 328H184Z" fill="url(#zcode-brand-z-gradient)" />
+        <path d="M584 224H832L424 800H176Z" fill="url(#zcode-brand-z-gradient)" />
+        <path d="M536 720L600 656L648 704L824 528L888 592L648 832Z" fill="url(#zcode-brand-z-gradient)" />
       </svg>
     </>
   );
