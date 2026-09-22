@@ -447,10 +447,10 @@ export default {
   extraMetadata: {
     version: buildMetadata.appVersion,
     zcodeProductFlavor: desktopProductIdentity.flavor,
-    homepage: "https://zcode.z.ai",
+    homepage: "https://zcodium-project.github.io/",
     author: {
-      name: "ZCode",
-      email: "dev@zcode.z.ai",
+      name: "ZCodium",
+      email: "daiqianghaha@foxmail.com",
     },
   },
   // macOS 签名阶段会对 Electron Framework 下每个语言包逐个 codesign。

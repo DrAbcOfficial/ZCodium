@@ -123,7 +123,7 @@ zcode --help        # or run directly: node bin/zcode.mjs --help
 
 ## Disclaimer
 
-This repository is not affiliated with Zhipu (Beijing Zhipu Huazhang Technology Co., Ltd.). All facts come from public reporting and independent code audits, with sources cited. If any party believes something is inaccurate, please open an issue.
+This repository is community-driven open source and is not affiliated with any existing commercial company. All facts come from public reporting and independent code audits, with sources cited. If any party believes something is inaccurate, please open an issue.
 
 ---
 
