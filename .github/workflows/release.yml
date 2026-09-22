@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "版本号：填 3.14.0 会自动生成 3.14.0-audit.<当天日期>（同一天重复构建自动加 .2/.3）；也可直接填完整形式 3.14.0-audit.20260922[.2]"
+        description: "版本号：3.14.0（勾选预发布=自动生成 3.14.0-audit.<当天日期>，同日重复构建自动加 .2/.3；不勾选=正式版 v3.14.0）；也可直接填完整日期形式 3.14.0-audit.20260922[.2]"
         required: true
         type: string
       prerelease:
-        description: "标记为预发布（Pre-release）"
+        description: "预发布（audit 日期式版本）；不勾选则发布正式版（干净版本号，成为 GitHub Latest）"
         required: false
         type: boolean
         default: false
@@ -41,13 +41,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ inputs.version }}
+          PRERELEASE: ${{ inputs.prerelease }}
         run: |
           set -euo pipefail
-          # 版本采用日期式命名（tag 名即时间序，避免 audit 序号在 GitHub 列表/排序里错位）：
-          #   输入 3.14.0            -> 3.14.0-audit.<YYYYMMDD>，同一天重复构建自动追加 .2/.3/...
-          #   输入完整日期形式        -> 严格按给定版本使用，不自动递增
+          # 版本命名：
+          #   3.14.0 + 勾选预发布 -> 3.14.0-audit.<YYYYMMDD>（同一天重复构建自动追加 .2/.3/...）
+          #   3.14.0 + 不勾选     -> v3.14.0（正式版，成为 GitHub Latest，/releases/latest 可用）
+          #   完整日期形式         -> 严格按给定版本使用，不自动递增
           DATE="$(date -u +%Y%m%d)"
-          if printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          if printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' && [ "$PRERELEASE" != "true" ]; then
+            TAG="v$VERSION"
+            if git ls-remote --tags origin "refs/tags/$TAG" | grep -q .; then
+              echo "::error::Tag $TAG already exists"
+              exit 1
+            fi
+          elif printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
             BASE="$VERSION-audit.$DATE"
             TAG="v$BASE"
             if git ls-remote --tags origin "refs/tags/$TAG" | grep -q .; then
@@ -64,7 +72,7 @@ jobs:
               exit 1
             fi
           else
-            echo "::error::Invalid version \"$VERSION\". Use 3.14.0 (date and same-day sequence are appended automatically) or the full form 3.14.0-audit.20260922[.2]"
+            echo "::error::Invalid version \"$VERSION\". Use 3.14.0 (pre-release: date and same-day sequence are appended; stable: v3.14.0) or the full form 3.14.0-audit.20260922[.2]"
             exit 1
           fi
           if gh release view "$TAG" >/dev/null 2>&1; then
@@ -87,84 +95,87 @@ jobs:
           git tag "$TAG"
           git push origin "$TAG"
           cat > /tmp/release-notes.md <<'NOTES'
-          ## 安装说明 / Installation
+          # ZCodium <VERSION>
 
-          > 安装包没有 ZCode 官方签名，首次打开会被系统安全机制拦截。
-          > 这是预期行为，按下面各平台的方式放行一次即可；下载前可以先按本页 sha256.txt 校验文件。
-          >
-          > The builds are not signed by ZCode. Your system will block the first launch;
-          > follow the per-platform steps below once. Verify downloads against sha256.txt first.
+          > The builds are not signed by ZCode. Your system will block the first launch; allow it once per platform as below. Verify downloads against `sha256.txt` first.
 
-          ### macOS（.dmg）
+          ## English
 
-          按机型下载 mac-arm64（Apple Silicon）或 mac-x64（Intel）的 .dmg，打开后把 ZCodium 拖进“应用程序”。没有 ZCode 官方签名，Gatekeeper 会拦截首次打开；**先把应用拖进「应用程序」，再执行**下面命令（提示输入密码时输入开机密码，输入过程屏幕上不显示任何字符；命令执行完会自动打开 ZCodium，并立即退出，不会一直占用终端）：
+          ### Install
 
-          ```bash
-          sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
-          ```
+          - **macOS (.dmg)**: download `ZCodium-<VERSION>-mac-arm64.dmg` (Apple Silicon) or `ZCodium-<VERSION>-mac-x64.dmg` (Intel), open it, drag ZCodium into Applications. Because the app is not signed by ZCode, Gatekeeper blocks the first launch. After dragging, run the command below (password input is hidden; the command launches the app and exits immediately):
 
-          命令使用 /usr/bin/xattr 绝对路径，避免 PATH 中其他同名工具（例如 Python 的 xattr）干扰。也可以在“访达”里右键（Control-点击）应用 → 打开 → 弹窗里再点“打开”。
+            ```bash
+            sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
+            ```
 
-          ### Windows（.exe）
+            The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name. You can also right-click (Control-click) the app in Finder -> Open -> Open.
+          - **Windows (.exe)**: run `ZCodium-<VERSION>-win-x64.exe`. Because it is not signed by ZCode, SmartScreen shows "Windows protected your PC" - click **More info** -> **Run anyway**. This is expected, not a corrupted file.
+          - **Linux (.AppImage)**: `chmod +x ZCodium-<VERSION>-linux-x86_64.AppImage && ./ZCodium-<VERSION>-linux-x86_64.AppImage`.
+          - **CLI (.tar.gz)**: requires Node.js 24. Extract and run:
 
-          双击安装。安装包没有 ZCode 官方签名，SmartScreen 会弹出“Windows 已保护你的电脑”的警告：
-          点“**更多信息**” → “**仍要运行**”即可——这是预期提示，不是文件损坏。
+            ```bash
+            tar -xzf zcodium-<VERSION>.tar.gz
+            cd zcodium
+            ./install.sh        # installs the zcode command into ~/.zcode/runtime
+            zcode --help        # or run: node bin/zcode.mjs --help
+            ```
 
-          ### Linux（.AppImage）
+          ### What changed vs ZCode
 
-          ```bash
-          chmod +x ZCodium*linux*.AppImage
-          ./ZCodium*linux*.AppImage
-          ```
+          - **All monitoring and telemetry removed** (~26k lines): ARMS RUM, OTLP reporting, crash collection, resource and network sampling, UI analytics - with regression checks so they cannot be reintroduced.
+          - **Official platform services disconnected**: account login, feedback upload, coding plans, official MCP credentials, plugin marketplace and remote client config are short-circuited before any request; feedback points to GitHub Issues.
+          - **No account system**: no login, no account concepts. Configure your own API key or a custom model provider and start working.
+          - **No purchase or upgrade prompts**: the purchase UI and related copy are removed; nothing pushes you to buy a plan.
+          - **No repository upload behavior**: snapshot packaging and upload logic removed, with guards against reintroduction.
+          - **Open source and reviewable**: first-party code MIT, upstream Apache-2.0; removal reports for desktop, CLI and UI ship in the repository.
+          - **Transparent builds**: installers are built by GitHub Actions from this repository, and in-app updates point to this repository's GitHub Releases.
+          - **Honest limitations**: Computer Use is an unavailable placeholder; installers are unsigned (see Install above).
 
-          ### CLI 发行包 / CLI package（.tar.gz）
+          ## 中文
 
-          ```bash
-          tar -xzf zcodium-*.tar.gz
-          cd zcodium
-          ./install.sh        # 安装 zcode 命令（默认到 ~/.zcode/runtime）
-          # 或直接运行 / or run directly:
-          node bin/zcode.mjs --help
-          ```
+          ### 安装说明
 
-          CLI 发行包需要 Node.js 24。桌面安装包由 CI 构建，没有 ZCode 官方签名。
+          - **macOS（.dmg）**：按机型下载 `ZCodium-<VERSION>-mac-arm64.dmg`（Apple Silicon）或 `ZCodium-<VERSION>-mac-x64.dmg`（Intel），打开后把 ZCodium 拖进“应用程序”。没有 ZCode 官方签名，Gatekeeper 会拦截首次打开。拖入后执行下面命令（输入密码时不显示字符；命令会自动启动应用并立即退出）：
 
-          #### English
+            ```bash
+            sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"
+            ```
 
-          - **macOS**: download the mac-arm64 (Apple Silicon) or mac-x64 (Intel) DMG, open it and drag ZCodium into Applications. The app is not signed by ZCode, so **after dragging** run `sudo /usr/bin/xattr -rd com.apple.quarantine "/Applications/ZCodium.app" && open -a "ZCodium"` — enter your login password when asked (nothing is shown while typing); the command launches the app and exits immediately — or right-click (Control-click) the app → Open → Open. The absolute `/usr/bin/xattr` path avoids shadowing by other tools with the same name.
-          - **Windows**: run the .exe installer. SmartScreen shows "Windows protected your PC" — click **More info** → **Run anyway**. This is the expected warning, not a corrupted file.
-          - **Linux**: run `chmod +x ZCodium*linux*.AppImage && ./ZCodium*linux*.AppImage`.
-          - **CLI**: Node.js 24 is required. Extract the tarball and run `./install.sh` (installs the `zcode` command into `~/.zcode/runtime`) or `node bin/zcode.mjs --help`.
+            使用 `/usr/bin/xattr` 绝对路径，避免 PATH 中同名工具干扰。也可以在“访达”里右键（Control-点击）应用 -> 打开 -> 弹窗里再点“打开”。
+          - **Windows（.exe）**：运行 `ZCodium-<VERSION>-win-x64.exe`。没有 ZCode 官方签名，SmartScreen 会弹出“Windows 已保护你的电脑”——点“**更多信息**” -> “**仍要运行**”。这是预期提示，不是文件损坏。
+          - **Linux（.AppImage）**：`chmod +x ZCodium-<VERSION>-linux-x86_64.AppImage && ./ZCodium-<VERSION>-linux-x86_64.AppImage`。
+          - **CLI（.tar.gz）**：需要 Node.js 24。解压后运行：
 
-          ## 关于这个版本 / About this release
+            ```bash
+            tar -xzf zcodium-<VERSION>.tar.gz
+            cd zcodium
+            ./install.sh        # 安装 zcode 命令到 ~/.zcode/runtime
+            zcode --help        # 或直接运行：node bin/zcode.mjs --help
+            ```
 
-          基于上游开源代码的审计版本：监控与遥测已全部移除，上游改动逐提交审阅。改动细节见仓库 README。
+          ### 相对 ZCode 的改动
 
-          Audited build based on the upstream open-source code: telemetry removed, upstream changes reviewed commit by commit. See the repository README for details.
+          - **移除全部监控与遥测**（约 2.6 万行）：ARMS RUM、OTLP 上报、崩溃采集、资源与网络采样、UI 埋点，并加了防回归检查，防止重新引入。
+          - **断开官方平台服务**：账号登录、反馈上传、编码套餐、官方 MCP 凭证、插件市场与客户端远端配置在请求前短路；反馈入口指向 GitHub Issues。
+          - **没有账号体系**：不需要登录，也没有任何账号概念。配置自己的 API Key 或自定义模型即可开始使用。
+          - **没有购买与升级引导**：购买界面与相关文案已移除，不会引导你购买套餐。
+          - **移除仓库上传行为**：快照打包与上传逻辑已删除，并加了防回归保护。
+          - **开源可复核**：第一方代码 MIT，上游代码 Apache-2.0；桌面端、CLI、UI 的移除报告随仓库发布。
+          - **构建透明**：安装包由 GitHub Actions 从本仓库构建；应用内更新指向本仓库的 GitHub Releases。
+          - **如实说明限制**：Computer Use 为不可用占位；安装包未签名（见上方安装说明）。
+
+          ## Downloads / 产物
+
+          - macOS Apple Silicon: `ZCodium-<VERSION>-mac-arm64.dmg` / `.zip`
+          - macOS Intel: `ZCodium-<VERSION>-mac-x64.dmg` / `.zip`
+          - Windows x64: `ZCodium-<VERSION>-win-x64.exe`
+          - Linux x64: `ZCodium-<VERSION>-linux-x86_64.AppImage`
+          - CLI: `zcodium-<VERSION>.tar.gz`
+          - Checksums: `sha256.txt`
+          - Update metadata: `latest*.yml`, `latest.json`
           NOTES
-          # 仅正式版追加更新日志；预发布版本不带 changelog。
-          if [ "$PRERELEASE" != "true" ]; then
-            PREV_STABLE="$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-pre-releases --exclude-drafts --limit 1 --json tagName --jq '.[0].tagName // empty')"
-            {
-              echo
-              echo "## 更新日志 / Changelog"
-              echo
-              if [ -n "$PREV_STABLE" ]; then
-                echo "自上一个正式版 \`$PREV_STABLE\` 以来的变更 / Changes since \`$PREV_STABLE\`:"
-                CHANGELOG_RANGE="$PREV_STABLE..$TAG"
-              else
-                echo "首个正式版，包含以下变更 / First stable release, includes the following changes:"
-                CHANGELOG_RANGE="$(git rev-list --max-parents=0 HEAD)..$TAG"
-              fi
-              echo
-              CHANGES="$(git log --no-merges --pretty='- %s (`%h`)' "$CHANGELOG_RANGE")"
-              if [ -n "$CHANGES" ]; then
-                printf '%s\n' "$CHANGES"
-              else
-                echo "- 无代码变更 / No code changes."
-              fi
-            } >> /tmp/release-notes.md
-          fi
+          sed -i "s/<VERSION>/${TAG#v}/g" /tmp/release-notes.md
           args=(--title "$TAG" --notes-file /tmp/release-notes.md)
           if [ "$PRERELEASE" = "true" ]; then
             args+=(--prerelease)
